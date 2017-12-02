@@ -240,12 +240,12 @@ MonoBehaviour:
   firstPosition: {x: 0, y: 1.5}
   branchLevel: 0
   secondsBetweenSegments: 0.5
-  maxHeight: 20
+  maxHeight: 19.5
   maxLeftRightDistance: 10
-  xMinMaxChangeMagnitude: {x: 0.1, y: 1}
-  yMinMaxChangeMagnitude: {x: 0.3, y: 1.5}
+  xMinMaxChangeMagnitude: {x: 0.2, y: 0.8}
+  yMinMaxChangeMagnitude: {x: 0.5, y: 1.5}
   maxBaseWidth: 3
-  tipWidth: 0.5
+  tipWidth: 0.25
   branchMaterial: {fileID: 2100000, guid: 173b4ffc29d7f441983162266ca6208e, type: 2}
 --- !u!1 &1567497931
 GameObject:

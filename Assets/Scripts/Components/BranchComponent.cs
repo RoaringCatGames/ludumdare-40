@@ -9,11 +9,11 @@ public class BranchComponent : MonoBehaviour
 	public static readonly float CHILD_BRANCH_SCALE_FACTOR = 0.5f;
 
   [Header("Initial Segment")]
-  public Vector2 firstPosition = new Vector2(0f, 1.5f);
+  public Vector2 firstPosition = new Vector2(0f, 0.75f);
 	public int branchLevel = 0;
 
   [Header("Growth Properties")]
-  public float secondsBetweenSegments = 0.5f;//2f;
+  public float secondsBetweenSegments = 0.5f;
   public float maxHeight = 20f;
   public float maxLeftRightDistance = 10f;
   public Vector2 xMinMaxChangeMagnitude = new Vector2(0.1f, 1f);
