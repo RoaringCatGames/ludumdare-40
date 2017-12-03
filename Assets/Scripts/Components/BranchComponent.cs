@@ -24,6 +24,9 @@ public class BranchComponent : MonoBehaviour
   [Header("Rendering Settings")]
   public Material branchMaterial;
 
+	[Header("User Interactoins")]
+	public GameObject selectionPointPrefab;
+
 
   //[HideInInspector]
   private List<LineSegment> LineSegments = new List<LineSegment>();
@@ -118,23 +121,28 @@ public class BranchComponent : MonoBehaviour
 				(childBranchCount == 0 && LineSegments.Count == 4) || 
 				((childBranchCount * 4) + 4 == LineSegments.Count)) {
 
-				GameObject newChild = new GameObject();
-				newChild.transform.parent = transform;
+        GameObject selectionPoint = Instantiate(selectionPointPrefab, LineSegments.Last().StartPoint, Quaternion.identity);
+        selectionPoint.transform.parent = transform;
+        selectionPoint.transform.localPosition = LineSegments.Last().StartPoint;
 
-				float branchRotation = Random.Range(0f, 1f) >= 0.5f ? -90f : 90f;	
-				branchRotation += newChild.transform.parent.rotation.eulerAngles.z;
+				// GameObject newChild = new GameObject();
+				// newChild.transform.parent = transform;
 
-				newChild.transform.rotation = Quaternion.Euler(0f, 0f, branchRotation);
-				newChild.transform.localPosition = LineSegments.Last().StartPoint;
+				// float branchRotation = Random.Range(0f, 1f) >= 0.5f ? -90f : 90f;	
+				// branchRotation += newChild.transform.parent.rotation.eulerAngles.z;
 
-				float remainingBranchDistanceRatio = (maxHeight - newChild.transform.localPosition.y)/maxHeight;
-				BranchComponent newBranch = newChild.AddComponent<BranchComponent>();				
-				newBranch.branchMaterial = new Material(branchMaterial);
-				newBranch.branchLevel = branchLevel + 1;
-				newBranch.maxBaseWidth = maxBaseWidth * CHILD_BRANCH_SCALE_FACTOR * remainingBranchDistanceRatio;
-				newBranch.maxHeight = maxHeight * CHILD_BRANCH_SCALE_FACTOR;
-				newBranch.maxLeftRightDistance = maxLeftRightDistance * CHILD_BRANCH_SCALE_FACTOR;
-				newBranch.tipWidth = tipWidth * CHILD_BRANCH_SCALE_FACTOR;
+				// newChild.transform.rotation = Quaternion.Euler(0f, 0f, branchRotation);
+				// newChild.transform.localPosition = LineSegments.Last().StartPoint;
+
+				// float remainingBranchDistanceRatio = (maxHeight - newChild.transform.localPosition.y)/maxHeight;
+				// BranchComponent newBranch = newChild.AddComponent<BranchComponent>();				
+				// newBranch.branchMaterial = new Material(branchMaterial);
+				// newBranch.branchLevel = branchLevel + 1;
+				// newBranch.maxBaseWidth = maxBaseWidth * CHILD_BRANCH_SCALE_FACTOR * remainingBranchDistanceRatio;
+				// newBranch.maxHeight = maxHeight * CHILD_BRANCH_SCALE_FACTOR;
+				// newBranch.maxLeftRightDistance = maxLeftRightDistance * CHILD_BRANCH_SCALE_FACTOR;
+				// newBranch.tipWidth = tipWidth * CHILD_BRANCH_SCALE_FACTOR;
+        // newBranch.selectionPointPrefab = selectionPointPrefab;
 
 				childBranchCount += 1;
 			}
