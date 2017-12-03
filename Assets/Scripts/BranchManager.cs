@@ -7,9 +7,11 @@ public class BranchManager : MonoBehaviour
 {
 
   public static BranchManager instance;
+	public GameObject treePrefab;
 
 	public bool isZenMode = false;
 
+	private bool isMarkedForReset = false;
   private List<BranchComponent> branches = new List<BranchComponent>();
 	private bool hasGameEnded = false;
 
@@ -19,6 +21,10 @@ public class BranchManager : MonoBehaviour
     if (instance == null)
     {
       instance = this;
+
+			if(treePrefab != null){
+				Instantiate(treePrefab, new Vector3(), Quaternion.identity);
+			}
 
 			// LineSegment AB = new LineSegment(-1, -1, 1, 1);
 			// LineSegment CD = new LineSegment(-1, 1, 1, -1);
@@ -39,6 +45,22 @@ public class BranchManager : MonoBehaviour
     DontDestroyOnLoad(gameObject);
   }
 
+	void Update(){
+		if(isMarkedForReset){
+			isMarkedForReset = false;
+			// Delete All Branches
+			branches.ForEach((branch) => {
+				Destroy(branch.gameObject);
+			});
+			branches.Clear();
+			// Start a new Root Tree
+			GameObject tree = Instantiate(treePrefab, new Vector3(), Quaternion.identity);
+
+			//Set our flag to play again
+			hasGameEnded = false;
+		}
+	}
+	
   // Update is called once per frame
   void LateUpdate()
   {
@@ -51,6 +73,14 @@ public class BranchManager : MonoBehaviour
 					// Trigger Final Flowering
 					// Stop All Branches from Growing further
 					branches.ForEach((b) => b.isGrowing = false);
+					foreach(var spi in FindObjectsOfType(typeof(SelectionPointInteractions))){
+						if(spi is GameObject){
+							Destroy(spi);
+						}else if(spi is SelectionPointInteractions){
+							Destroy(((SelectionPointInteractions)spi).gameObject);
+						}
+					}
+
 					// TODO: Play SFX
 
 				}
@@ -63,8 +93,6 @@ public class BranchManager : MonoBehaviour
 					hasGameEnded = true;
 				}
 			}
-		} else {
-			Logger.Log("Game is Over");
 		}
   }
 
@@ -78,7 +106,7 @@ public class BranchManager : MonoBehaviour
 	}
 
 	public void ResetScene(){
-		//TODO: RESET IT ALL!!
+		isMarkedForReset = true;
 	}
 
 	private bool isTreeStillGrowing(){

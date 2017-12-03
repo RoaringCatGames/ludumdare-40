@@ -13,8 +13,9 @@ public class EndGameControlsController : MonoBehaviour {
 		animator = GetComponent<Animator>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	// Using Late Update is a total Hack here, to try and time the 
+	//	controlsShowing flag from getting reset
+	void LateUpdate () {
 		if(BranchManager.instance.IsGameOver() && !areControlsShowing){
 			Logger.Log("GAME ENDED");
 			areControlsShowing = true;
