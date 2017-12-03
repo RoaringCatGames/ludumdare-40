@@ -8,27 +8,29 @@ public class BranchManager : MonoBehaviour
 
   public static BranchManager instance;
 
+	public bool isZenMode = false;
+
   private List<BranchComponent> branches = new List<BranchComponent>();
 	private bool hasGameEnded = false;
 
   // Use this for initialization
-  void Start()
+  void Awake()
   {
     if (instance == null)
     {
       instance = this;
 
-			LineSegment AB = new LineSegment(-1, -1, 1, 1);
-			LineSegment CD = new LineSegment(-1, 1, 1, -1);
+			// LineSegment AB = new LineSegment(-1, -1, 1, 1);
+			// LineSegment CD = new LineSegment(-1, 1, 1, -1);
 
-			bool doCross = LineUtils.CrossProductIntersectTest(AB, CD);
+			// bool doCross = LineUtils.CrossProductIntersectTest(AB, CD);
 
-			LineSegment EF = new LineSegment(-1, -1, -1, 1);
-			LineSegment GH = new LineSegment(1, 1, 1, -1);
+			// LineSegment EF = new LineSegment(-1, -1, -1, 1);
+			// LineSegment GH = new LineSegment(1, 1, 1, -1);
 
-			bool secondDoCross = LineUtils.CrossProductIntersectTest(EF, GH);
+			// bool secondDoCross = LineUtils.CrossProductIntersectTest(EF, GH);
 
-			Logger.Log("AB->CD Cross: ", doCross, " EF->GH Cross: ", secondDoCross);
+			// Logger.Log("AB->CD Cross: ", doCross, " EF->GH Cross: ", secondDoCross);
     }
     else if (this != instance)
     {
@@ -41,12 +43,28 @@ public class BranchManager : MonoBehaviour
   void LateUpdate()
   {
 		if(!hasGameEnded){
-			bool collisionFound = checkForCollisions();
+			if(!isZenMode){
+				bool collisionFound = checkForCollisions();
 
-			if(collisionFound){
-				hasGameEnded = true;
-				// Trigger Final Flowering
+				if(collisionFound){
+					hasGameEnded = true;
+					// Trigger Final Flowering
+					// Stop All Branches from Growing further
+					branches.ForEach((b) => b.isGrowing = false);
+					// TODO: Play SFX
+
+				}
 			}
+
+			if(!hasGameEnded){
+				bool isStillGrowing = isTreeStillGrowing();
+				if(!isStillGrowing){
+					Logger.Log("Tree is Not Growing anymore");
+					hasGameEnded = true;
+				}
+			}
+		} else {
+			Logger.Log("Game is Over");
 		}
   }
 
@@ -55,6 +73,22 @@ public class BranchManager : MonoBehaviour
     branches.Add(branch);
   }
 
+	public bool IsGameOver(){
+		return hasGameEnded;
+	}
+
+	public void ResetScene(){
+		//TODO: RESET IT ALL!!
+	}
+
+	private bool isTreeStillGrowing(){
+		int growingBranchCount = branches.Where((b) => b.isGrowing).Count();
+
+		// If we are growing any branches, or any branch points are still active
+		//	the game is still alive. Also if the first branch hasn't been added
+		//	yet, we are still alive.
+		return branches.Count == 0 || growingBranchCount > 0 || FindObjectsOfType(typeof(SelectionPointInteractions)).Length > 0;
+	}
 	private bool checkForCollisions(){
 		bool shouldEndGame = false;
     // For every Branch that is growing, we need to check if it's crossing other branches.

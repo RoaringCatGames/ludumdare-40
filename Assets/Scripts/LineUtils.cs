@@ -3,7 +3,6 @@ using UnityEngine;
 
 public static class LineUtils
 {
-
   public static Vector2 GetIntersectionPointCoordinates(Vector2 A1, Vector2 A2, Vector2 B1, Vector2 B2, out bool found)
   {
     float tmp = (B2.x - B1.x) * (A2.y - A1.y) - (B2.y - B1.y) * (A2.x - A1.x);
@@ -24,7 +23,7 @@ public static class LineUtils
         B1.y + (B2.y - B1.y) * mu
     );
   }
-  
+
   public static float Cross(this Vector2 v1, Vector2 v2)
   {
     return v1.x * v2.y - v1.y * v2.x;
