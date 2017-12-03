@@ -19,4 +19,8 @@ public class LineSegment {
 
   public Vector3 StartPoint {get; set;}
   public Vector3 EndPoint {get; set;}
+
+  public override string ToString(){
+    return StartPoint + " -> " + EndPoint;
+  }
 }

@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Base
+    uniqueID: 143304283
+    locked: 0
+  - name: Trunk
+    uniqueID: 2893427643
+    locked: 0
+  - name: Branches
+    uniqueID: 1969188579
+    locked: 0
+  - name: Points
+    uniqueID: 4224127307
+    locked: 0
