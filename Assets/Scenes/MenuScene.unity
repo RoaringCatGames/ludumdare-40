@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e0a8adcc8aa4b458e5a4345de99042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstPosition: {x: 0, y: 0.75}
+  firstPosition: {x: 0, y: 1.5}
   branchLevel: 0
   secondsBetweenSegments: 0.5
   maxHeight: 19.5
@@ -249,6 +249,48 @@ MonoBehaviour:
   branchMaterial: {fileID: 2100000, guid: 173b4ffc29d7f441983162266ca6208e, type: 2}
   selectionPointPrefab: {fileID: 1691132182018894, guid: 0d49b90dd558d40f18baff5783633387,
     type: 2}
+  isGrowing: 1
+  parentBranch: {fileID: 0}
+--- !u!1 &1231751484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1231751486}
+  - component: {fileID: 1231751485}
+  m_Layer: 0
+  m_Name: BranchManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1231751485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1231751484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5c0771b8db14f258f58e4554ea288f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1231751486
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1231751484}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.952221, y: 18.209877, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1567497931
 GameObject:
   m_ObjectHideFlags: 0

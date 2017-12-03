@@ -7,9 +7,11 @@ public class BranchComponent : MonoBehaviour
 {
   public static readonly int MAX_BRANCH_DEPTH = 2;
   public static readonly float CHILD_BRANCH_SCALE_FACTOR = 0.5f;
+  public static readonly int TRUNK_BASE_SEGMENTS = 6;
+  public static readonly int SEGMENTS_BETWEEN_BRANCH_POINTS = 4;
 
   [Header("Initial Segment")]
-  public Vector2 firstPosition = new Vector2(0f, 0.75f);
+  public Vector2 firstPosition = new Vector2(0f, 1.5f);
   public int branchLevel = 0;
 
   [Header("Growth Properties")]
@@ -28,14 +30,28 @@ public class BranchComponent : MonoBehaviour
   public GameObject selectionPointPrefab;
 
 
-  //[HideInInspector]
-  private List<LineSegment> LineSegments = new List<LineSegment>();
+  [HideInInspector]
+  public List<LineSegment> LineSegments = new List<LineSegment>();
+  [HideInInspector]
+  public bool isGrowing = true;
+  [HideInInspector]
+  public BranchComponent parentBranch;
 
   private LineRenderer lineRenderer;
   private float elapsedTime = 0f;
   private Vector3 nextTargetPosition;
-  private bool isGrowing = true;
   private int childBranchCount = 0;
+
+  public List<LineSegment> WorldLineSegments {
+    get {
+      return LineSegments.Select((ls) => {
+        return new LineSegment(
+          transform.TransformPoint(ls.StartPoint),
+          transform.TransformPoint(ls.EndPoint)
+        );
+      }).ToList();
+    }
+  }
 
   // Use this for initialization
   void Start()
@@ -56,6 +72,9 @@ public class BranchComponent : MonoBehaviour
 
     lineRenderer.positionCount = positions.Length;
     lineRenderer.SetPositions(positions);
+
+    // Add Ourselves to the Branch Manager
+    BranchManager.instance.AddBranch(this);
   }
 
   // Update is called once per frame
@@ -92,7 +111,10 @@ public class BranchComponent : MonoBehaviour
         newTopPosition = Vector3.Lerp(prevPosition, nextTargetPosition, positionOfGrowthTime);
 
         //Update our last Line Segment
+        LineSegment currentSegment = LineSegments.Last();
         LineSegments.Last().EndPoint = newTopPosition;
+
+
       }
 
       //Once we hit our length, stop growing
@@ -115,9 +137,15 @@ public class BranchComponent : MonoBehaviour
       lineRenderer.SetPositions(linePositions);
 
 
+      // Rules:
+      //  1. Only branches below MAX_BRANCH_DEPTH can Generate Branches
+      //  2. For The Trunk (branchLevel == 0) we need to wait until we have enough Base Segments
+      //  3. For child branches, we spawn branches between the set Segments Between Branches, and
+      //      for segments on the trunk after the first, we need to make sure to account for the Base Trunk
+      //      segments.
       if (branchLevel <= MAX_BRANCH_DEPTH &&
-        (childBranchCount == 0 && LineSegments.Count == 4) ||
-        ((childBranchCount * 4) + 4 == LineSegments.Count))
+         (branchLevel == 0 && childBranchCount == 0 && LineSegments.Count == TRUNK_BASE_SEGMENTS) ||
+         ((childBranchCount * SEGMENTS_BETWEEN_BRANCH_POINTS) + (branchLevel == 0 ? TRUNK_BASE_SEGMENTS : SEGMENTS_BETWEEN_BRANCH_POINTS) == LineSegments.Count))
       {
 
         GameObject selectionPoint = Instantiate(selectionPointPrefab, LineSegments.Last().StartPoint, Quaternion.identity);
@@ -142,7 +170,7 @@ public class BranchComponent : MonoBehaviour
     // Our branch is rendered straight "up" locally, so the target
     //  direction needs to have 90 degrees pulled off to account
     //  for it.
-    branchRotation -= - 90f;
+    branchRotation -= 90f;
     // If we are in a child level, we need to add the parent branch
     //  rotation object to make sure we are calculated in nested
     //  rotations due to calculating from world units.
@@ -160,6 +188,7 @@ public class BranchComponent : MonoBehaviour
     newBranch.maxLeftRightDistance = maxLeftRightDistance * CHILD_BRANCH_SCALE_FACTOR;
     newBranch.tipWidth = tipWidth * CHILD_BRANCH_SCALE_FACTOR;
     newBranch.selectionPointPrefab = selectionPointPrefab;
+    newBranch.parentBranch = this;
   }
 
   private bool isVectorEmpty(Vector3 inVector)
