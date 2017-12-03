@@ -69,6 +69,7 @@ public class BranchComponent : MonoBehaviour
       lineRenderer = this.gameObject.AddComponent<LineRenderer>();
       lineRenderer.textureMode = LineTextureMode.DistributePerSegment;
       lineRenderer.material = branchMaterial;
+      lineRenderer.numCornerVertices = 25;
       lineRenderer.useWorldSpace = false;
     }
 
@@ -208,29 +209,40 @@ public class BranchComponent : MonoBehaviour
   {
     LineSegment end = null, before = null;
     end = LineSegments.Last();
+    if(end == null){
+      return;
+    }
 
+    if (LineSegments.Count() >= 2)
+    {
+      before = LineSegments.Last((ls) => ls != end);
+    }
 
     if (branchLevel == 0)
     {
-      //Spawn Leaves only on last 2 segments
-      if (end != null && LineSegments.Count() >= 2)
-      {
-        before = LineSegments.Last((ls) => ls != end);
-      }
-
       if (before != null)
       {
-        spawnLeavesOverSegment(before, 2f);
+        spawnLeavesOverSegment(before, 2f, 0.05f);
       }
       if (end != null)
       {
-        spawnLeavesOverSegment(end, 4f);
-        spawnFlowersOverSegment(end, 2f);
+        spawnLeavesOverSegment(end, 2f, 0.5f);
+        spawnFlowersOverSegment(end, 1.5f, 1f);
       }
+    }
+    else if(branchLevel == 1){
+      int i = 0;
+      foreach(LineSegment ls in LineSegments){
+        if(i != 0 && ls != end){
+          spawnLeavesOverSegment(ls, 2f, 0.05f * (i+1));
+        }
+        i++;
+      }
+      spawnLeavesOverSegment(end, 2f, 0.25f);
     }
     else if (branchLevel > 1)
     {
-      spawnFlowersOverSegment(end, 4f * branchLevel);
+      spawnFlowersOverSegment(end, 4f * branchLevel, 0.5f * branchLevel);
     }
 
 
@@ -252,16 +264,16 @@ public class BranchComponent : MonoBehaviour
     "Bloom 3"
   };
 
-  private void spawnFlowersOverSegment(LineSegment ls, float density)
+  private void spawnFlowersOverSegment(LineSegment ls, float density, float baseDelay)
   {
-    spawnPrefabOverSegment(animatedFlowerPrefab, flowerAniNames, ls, density, 1.75f);
+    spawnPrefabOverSegment(animatedFlowerPrefab, flowerAniNames, ls, density, 1.75f, baseDelay);
   }
-  private void spawnLeavesOverSegment(LineSegment ls, float density)
+  private void spawnLeavesOverSegment(LineSegment ls, float density, float baseDelay)
   {
-    spawnPrefabOverSegment(animatedLeafPrefab, leafAniNames, ls, density, 1.5f);
+    spawnPrefabOverSegment(animatedLeafPrefab, leafAniNames, ls, density, 0.05f, baseDelay);
   }
 
-  private void spawnPrefabOverSegment(GameObject prefab, string[] animationNames, LineSegment ls, float density, float bufferBetween)
+  private void spawnPrefabOverSegment(GameObject prefab, string[] animationNames, LineSegment ls, float density, float bufferBetween, float baseDelay)
   {
     Vector3 dir = ls.Direction().normalized;
     float length = ls.Length();
@@ -281,7 +293,7 @@ public class BranchComponent : MonoBehaviour
 
     foreach (Vector3 point in points)
     {
-      int numSpawns = Random.Range(1, Mathf.CeilToInt(3 * density));
+      int numSpawns = Random.Range(1, Mathf.CeilToInt(1.25f * density));
       int added = 0;
       while (added < numSpawns)
       {
@@ -292,9 +304,9 @@ public class BranchComponent : MonoBehaviour
         
         GameObject leaf = Instantiate(prefab, targetLocalPosition, Quaternion.identity, transform);
         leaf.transform.localPosition = targetLocalPosition;
-        
-        Animator ani = leaf.GetComponent<Animator>();
-        ani.Play(animationNames[Random.Range(0, animationNames.Length)]);
+        DelayedAnimationComponent delay = leaf.AddComponent<DelayedAnimationComponent>();
+        delay.delaySeconds = Random.Range(0.25f, 2f) + baseDelay;
+        delay.animationName = animationNames[Random.Range(0, animationNames.Length)];
         added++;
       }
     }
