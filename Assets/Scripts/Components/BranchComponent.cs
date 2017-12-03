@@ -163,7 +163,7 @@ public class BranchComponent : MonoBehaviour
       }
     }
 
-    if (!isGrowing && !hasSpawnedFoliage)
+    if (!isGrowing && !hasSpawnedFoliage && BranchManager.instance.IsGameOver())
     {
       spawnFoliage();
     }
