@@ -25,6 +25,8 @@ public class BranchComponent : MonoBehaviour
 
   [Header("Rendering Settings")]
   public Material branchMaterial;
+  public GameObject animatedLeafPrefab;
+  public GameObject animatedFlowerPrefab;
 
   [Header("User Interactoins")]
   public GameObject selectionPointPrefab;
@@ -41,10 +43,14 @@ public class BranchComponent : MonoBehaviour
   private float elapsedTime = 0f;
   private Vector3 nextTargetPosition;
   private int childBranchCount = 0;
+  private bool hasSpawnedFoliage = false;
 
-  public List<LineSegment> WorldLineSegments {
-    get {
-      return LineSegments.Select((ls) => {
+  public List<LineSegment> WorldLineSegments
+  {
+    get
+    {
+      return LineSegments.Select((ls) =>
+      {
         return new LineSegment(
           transform.TransformPoint(ls.StartPoint),
           transform.TransformPoint(ls.EndPoint)
@@ -156,6 +162,11 @@ public class BranchComponent : MonoBehaviour
         childBranchCount += 1;
       }
     }
+
+    if (!isGrowing && !hasSpawnedFoliage)
+    {
+      spawnFoliage();
+    }
   }
 
   public void AddBranch(Vector3 worldStartPoint, Vector3 worldDirection)
@@ -166,7 +177,7 @@ public class BranchComponent : MonoBehaviour
     Vector3 localPoint = transform.InverseTransformPoint(worldStartPoint);
     Vector3 localDirection = transform.InverseTransformDirection(worldDirection);
     localDirection.z = 0.0f;
-    float branchRotation = Mathf.Atan2(localDirection.y, localDirection.x) * Mathf.Rad2Deg;    
+    float branchRotation = Mathf.Atan2(localDirection.y, localDirection.x) * Mathf.Rad2Deg;
     // Our branch is rendered straight "up" locally, so the target
     //  direction needs to have 90 degrees pulled off to account
     //  for it.
@@ -189,6 +200,104 @@ public class BranchComponent : MonoBehaviour
     newBranch.tipWidth = tipWidth * CHILD_BRANCH_SCALE_FACTOR;
     newBranch.selectionPointPrefab = selectionPointPrefab;
     newBranch.parentBranch = this;
+    newBranch.animatedFlowerPrefab = animatedFlowerPrefab;
+    newBranch.animatedLeafPrefab = animatedLeafPrefab;
+  }
+
+  private void spawnFoliage()
+  {
+    LineSegment end = null, before = null;
+    end = LineSegments.Last();
+
+
+    if (branchLevel == 0)
+    {
+      //Spawn Leaves only on last 2 segments
+      if (end != null && LineSegments.Count() >= 2)
+      {
+        before = LineSegments.Last((ls) => ls != end);
+      }
+
+      if (before != null)
+      {
+        spawnLeavesOverSegment(before, 2f);
+      }
+      if (end != null)
+      {
+        spawnLeavesOverSegment(end, 4f);
+        spawnFlowersOverSegment(end, 2f);
+      }
+    }
+    else if (branchLevel > 1)
+    {
+      spawnFlowersOverSegment(end, 4f * branchLevel);
+    }
+
+
+
+    hasSpawnedFoliage = true;
+  }
+
+  private string[] leafAniNames = new string[]{
+    "leaf-1",
+    "leaf-2",
+    "leaf-3",
+    "leaf-4",
+    "leaf-5"
+  };
+
+  private string[] flowerAniNames = new string[] {
+    "Bloom 1",
+    "Bloom 2",
+    "Bloom 3"
+  };
+
+  private void spawnFlowersOverSegment(LineSegment ls, float density)
+  {
+    spawnPrefabOverSegment(animatedFlowerPrefab, flowerAniNames, ls, density, 1.75f);
+  }
+  private void spawnLeavesOverSegment(LineSegment ls, float density)
+  {
+    spawnPrefabOverSegment(animatedLeafPrefab, leafAniNames, ls, density, 1.5f);
+  }
+
+  private void spawnPrefabOverSegment(GameObject prefab, string[] animationNames, LineSegment ls, float density, float bufferBetween)
+  {
+    Vector3 dir = ls.Direction().normalized;
+    float length = ls.Length();
+
+    float stepMagnitude = length / density;
+    float placementOffset = stepMagnitude * 0.25f;
+    dir *= stepMagnitude;
+    Vector3 stepVector = dir;
+
+    List<Vector3> points = new List<Vector3>();
+    points.Add(ls.StartPoint);
+    while (dir.magnitude <= stepMagnitude)
+    {
+      points.Add(ls.StartPoint + dir);
+      dir += stepVector;
+    }
+
+    foreach (Vector3 point in points)
+    {
+      int numSpawns = Random.Range(1, Mathf.CeilToInt(3 * density));
+      int added = 0;
+      while (added < numSpawns)
+      {
+
+        float xOff = Random.Range(-bufferBetween, bufferBetween);
+        float yOff = Random.Range(-bufferBetween, bufferBetween);
+        Vector3 targetLocalPosition = point + Vector3.ClampMagnitude(new Vector3(xOff, yOff, 0f), bufferBetween);
+        
+        GameObject leaf = Instantiate(prefab, targetLocalPosition, Quaternion.identity, transform);
+        leaf.transform.localPosition = targetLocalPosition;
+        
+        Animator ani = leaf.GetComponent<Animator>();
+        ani.Play(animationNames[Random.Range(0, animationNames.Length)]);
+        added++;
+      }
+    }
   }
 
   private bool isVectorEmpty(Vector3 inVector)
