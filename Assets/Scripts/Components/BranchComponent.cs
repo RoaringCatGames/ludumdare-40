@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class BranchComponent : MonoBehaviour
 {
-	public static readonly int MAX_BRANCH_DEPTH = 2;
-	public static readonly float CHILD_BRANCH_SCALE_FACTOR = 0.5f;
+  public static readonly int MAX_BRANCH_DEPTH = 2;
+  public static readonly float CHILD_BRANCH_SCALE_FACTOR = 0.5f;
 
   [Header("Initial Segment")]
   public Vector2 firstPosition = new Vector2(0f, 0.75f);
-	public int branchLevel = 0;
+  public int branchLevel = 0;
 
   [Header("Growth Properties")]
   public float secondsBetweenSegments = 0.5f;
@@ -24,8 +24,8 @@ public class BranchComponent : MonoBehaviour
   [Header("Rendering Settings")]
   public Material branchMaterial;
 
-	[Header("User Interactoins")]
-	public GameObject selectionPointPrefab;
+  [Header("User Interactoins")]
+  public GameObject selectionPointPrefab;
 
 
   //[HideInInspector]
@@ -35,7 +35,7 @@ public class BranchComponent : MonoBehaviour
   private float elapsedTime = 0f;
   private Vector3 nextTargetPosition;
   private bool isGrowing = true;
-	private int childBranchCount = 0;
+  private int childBranchCount = 0;
 
   // Use this for initialization
   void Start()
@@ -56,9 +56,6 @@ public class BranchComponent : MonoBehaviour
 
     lineRenderer.positionCount = positions.Length;
     lineRenderer.SetPositions(positions);
-
-    //Setup initial Line Segments
-    //LineSegments.Add(new LineSegment(positions[0], positions[1]));
   }
 
   // Update is called once per frame
@@ -98,17 +95,18 @@ public class BranchComponent : MonoBehaviour
         LineSegments.Last().EndPoint = newTopPosition;
       }
 
-			//Once we hit our length, stop growing
-			if(newTopPosition.y >= maxHeight){
-				isGrowing = false;
-			}
+      //Once we hit our length, stop growing
+      if (newTopPosition.y >= maxHeight)
+      {
+        isGrowing = false;
+      }
 
       //Reset Positions
       linePositions = new Vector3[linePositionsSize];
       lineRenderer.GetPositions(linePositions);
       linePositions[linePositions.Length - 1] = newTopPosition;
       lineRenderer.positionCount = linePositions.Length;
-			float branchHeight = Vector3.Distance(newTopPosition, linePositions[0]);
+      float branchHeight = Vector3.Distance(newTopPosition, linePositions[0]);
       float baseWidth = Mathf.Clamp((branchHeight / maxHeight) * maxBaseWidth, tipWidth, maxBaseWidth);
       lineRenderer.widthCurve = new AnimationCurve(
         new Keyframe(0f, baseWidth),
@@ -117,36 +115,51 @@ public class BranchComponent : MonoBehaviour
       lineRenderer.SetPositions(linePositions);
 
 
-			if(branchLevel <= MAX_BRANCH_DEPTH &&
-				(childBranchCount == 0 && LineSegments.Count == 4) || 
-				((childBranchCount * 4) + 4 == LineSegments.Count)) {
+      if (branchLevel <= MAX_BRANCH_DEPTH &&
+        (childBranchCount == 0 && LineSegments.Count == 4) ||
+        ((childBranchCount * 4) + 4 == LineSegments.Count))
+      {
 
         GameObject selectionPoint = Instantiate(selectionPointPrefab, LineSegments.Last().StartPoint, Quaternion.identity);
         selectionPoint.transform.parent = transform;
         selectionPoint.transform.localPosition = LineSegments.Last().StartPoint;
+        selectionPoint.GetComponent<SelectionPointInteractions>().parentBranch = this;
 
-				// GameObject newChild = new GameObject();
-				// newChild.transform.parent = transform;
+        childBranchCount += 1;
+      }
+    }
+  }
 
-				// float branchRotation = Random.Range(0f, 1f) >= 0.5f ? -90f : 90f;	
-				// branchRotation += newChild.transform.parent.rotation.eulerAngles.z;
+  public void AddBranch(Vector3 worldStartPoint, Vector3 worldDirection)
+  {
+    GameObject newChild = new GameObject();
+    newChild.transform.parent = transform;
 
-				// newChild.transform.rotation = Quaternion.Euler(0f, 0f, branchRotation);
-				// newChild.transform.localPosition = LineSegments.Last().StartPoint;
+    Vector3 localPoint = transform.InverseTransformPoint(worldStartPoint);
+    Vector3 localDirection = transform.InverseTransformDirection(worldDirection);
+    localDirection.z = 0.0f;
+    float branchRotation = Mathf.Atan2(localDirection.y, localDirection.x) * Mathf.Rad2Deg;    
+    // Our branch is rendered straight "up" locally, so the target
+    //  direction needs to have 90 degrees pulled off to account
+    //  for it.
+    branchRotation -= - 90f;
+    // If we are in a child level, we need to add the parent branch
+    //  rotation object to make sure we are calculated in nested
+    //  rotations due to calculating from world units.
+    branchRotation += transform.rotation.eulerAngles.z;
 
-				// float remainingBranchDistanceRatio = (maxHeight - newChild.transform.localPosition.y)/maxHeight;
-				// BranchComponent newBranch = newChild.AddComponent<BranchComponent>();				
-				// newBranch.branchMaterial = new Material(branchMaterial);
-				// newBranch.branchLevel = branchLevel + 1;
-				// newBranch.maxBaseWidth = maxBaseWidth * CHILD_BRANCH_SCALE_FACTOR * remainingBranchDistanceRatio;
-				// newBranch.maxHeight = maxHeight * CHILD_BRANCH_SCALE_FACTOR;
-				// newBranch.maxLeftRightDistance = maxLeftRightDistance * CHILD_BRANCH_SCALE_FACTOR;
-				// newBranch.tipWidth = tipWidth * CHILD_BRANCH_SCALE_FACTOR;
-        // newBranch.selectionPointPrefab = selectionPointPrefab;
+    newChild.transform.rotation = Quaternion.Euler(0f, 0f, branchRotation);
+    newChild.transform.localPosition = localPoint;
 
-				childBranchCount += 1;
-			}
-		}
+    float remainingBranchDistanceRatio = (maxHeight - newChild.transform.localPosition.y) / maxHeight;
+    BranchComponent newBranch = newChild.AddComponent<BranchComponent>();
+    newBranch.branchMaterial = new Material(branchMaterial);
+    newBranch.branchLevel = branchLevel + 1;
+    newBranch.maxBaseWidth = maxBaseWidth * CHILD_BRANCH_SCALE_FACTOR * remainingBranchDistanceRatio;
+    newBranch.maxHeight = maxHeight * CHILD_BRANCH_SCALE_FACTOR;
+    newBranch.maxLeftRightDistance = maxLeftRightDistance * CHILD_BRANCH_SCALE_FACTOR;
+    newBranch.tipWidth = tipWidth * CHILD_BRANCH_SCALE_FACTOR;
+    newBranch.selectionPointPrefab = selectionPointPrefab;
   }
 
   private bool isVectorEmpty(Vector3 inVector)
