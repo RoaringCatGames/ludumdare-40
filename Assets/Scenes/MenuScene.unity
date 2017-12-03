@@ -294,8 +294,10 @@ MonoBehaviour:
   maxBaseWidth: 3
   tipWidth: 0.25
   branchMaterial: {fileID: 2100000, guid: 173b4ffc29d7f441983162266ca6208e, type: 2}
-  animatedLeafPrefab: {fileID: 0}
-  animatedFlowerPrefab: {fileID: 0}
+  animatedLeafPrefab: {fileID: 1052806883646664, guid: 6988c745a7a416a46a8196afa8eb399b,
+    type: 2}
+  animatedFlowerPrefab: {fileID: 1449924602640506, guid: 73ee9f96a36664cb0871b862fb426b86,
+    type: 2}
   selectionPointPrefab: {fileID: 1691132182018894, guid: 0d49b90dd558d40f18baff5783633387,
     type: 2}
   isGrowing: 1
@@ -348,7 +350,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 5757eb1f2083a204fb7de82402c3c533, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -372,7 +374,7 @@ Transform:
   - {fileID: 1241046560}
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!111 &773960408
 Animation:
   m_ObjectHideFlags: 0
@@ -400,7 +402,7 @@ GameObject:
   - component: {fileID: 1067867281}
   - component: {fileID: 1067867284}
   m_Layer: 0
-  m_Name: cloud-01
+  m_Name: cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -557,8 +559,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1241046559}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.93, y: 9.62, z: 0}
-  m_LocalScale: {x: 0.52430254, y: 0.5598576, z: 3.5943203}
+  m_LocalPosition: {x: 0.36, y: 9.74, z: 0}
+  m_LocalScale: {x: 0.5041149, y: 0.53830105, z: 3.4559257}
   m_Children: []
   m_Father: {fileID: 773960407}
   m_RootOrder: 0
@@ -594,7 +596,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 4b7374a8aa8b9234aa79c75202f86a92, type: 3}
   m_Color: {r: 0.33823532, g: 0.33823532, b: 0.33823532, a: 1}
   m_FlipX: 0
@@ -614,6 +616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1442493390}
   - component: {fileID: 1442493389}
+  - component: {fileID: 1442493391}
   - component: {fileID: 1442493388}
   m_Layer: 0
   m_Name: fannie
@@ -694,6 +697,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!111 &1442493391
+Animation:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1442493387}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 57f24d7d455bded489d7154ef820b7b2, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1567497931
 GameObject:
   m_ObjectHideFlags: 0
