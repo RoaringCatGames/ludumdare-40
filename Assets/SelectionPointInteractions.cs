@@ -5,15 +5,12 @@ using UnityEngine;
 public class SelectionPointInteractions : MonoBehaviour
 {
 
+	public BranchComponent parentBranch;
+
   private bool isUserDragging = false;
 
   private Vector3 directionFromSelectionPoint;
 	private LineRenderer directionRenderer;
-  // Use this for initialization
-  void Start()
-  {
-
-  }
 
   // Update is called once per frame
   void Update()
@@ -21,7 +18,6 @@ public class SelectionPointInteractions : MonoBehaviour
 
     if (isUserDragging)
     {
-
       if (Input.GetMouseButtonDown(1))
       {
         //Right CLicking cancels Dragging
@@ -38,26 +34,26 @@ public class SelectionPointInteractions : MonoBehaviour
 				Destroy(directionRenderer);
 				directionRenderer = null;
 				
-        //TODO: Trigger Branch Creation
+        if(parentBranch != null){
+					parentBranch.AddBranch(transform.position, directionFromSelectionPoint);
+					Destroy(gameObject);
+				}
       }else{
 				if(directionRenderer != null){
-					var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+					var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 					directionRenderer.SetPositions(new Vector3[]{
 						transform.position,
-						new Vector3(mousePosition.x, mousePosition.y, 0f)
+						new Vector3(position.x, position.y, 0f)
 					});
 					directionRenderer.positionCount = 2;
 				}
 			}
-
-
     }
 
   }
 
   public void OnMouseDown()
   {
-    Logger.Log("SELECTION POINT STARTED!");
     isUserDragging = true;
 		directionRenderer = gameObject.AddComponent<LineRenderer>();
 		directionRenderer.startWidth = 0.1f;
