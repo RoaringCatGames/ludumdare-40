@@ -92,7 +92,7 @@ MonoBehaviour:
   branchMaterial: {fileID: 2100000, guid: 173b4ffc29d7f441983162266ca6208e, type: 2}
   animatedLeafPrefab: {fileID: 1052806883646664, guid: 6988c745a7a416a46a8196afa8eb399b,
     type: 2}
-  animatedFlowerPrefab: {fileID: 1821162585959956, guid: 24c51a1d0549626429001ba082205d37,
+  animatedFlowerPrefab: {fileID: 1449924602640506, guid: 73ee9f96a36664cb0871b862fb426b86,
     type: 2}
   selectionPointPrefab: {fileID: 1691132182018894, guid: 0d49b90dd558d40f18baff5783633387,
     type: 2}
