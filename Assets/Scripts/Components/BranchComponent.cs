@@ -69,7 +69,7 @@ public class BranchComponent : MonoBehaviour
       lineRenderer = this.gameObject.AddComponent<LineRenderer>();
       lineRenderer.textureMode = LineTextureMode.DistributePerSegment;
       lineRenderer.material = branchMaterial;
-      lineRenderer.numCornerVertices = 25;
+      lineRenderer.numCornerVertices = 10;
       lineRenderer.useWorldSpace = false;
     }
 
@@ -207,6 +207,7 @@ public class BranchComponent : MonoBehaviour
 
   private void spawnFoliage()
   {
+    float baseFlowerDensity = 6f;
     LineSegment end = null, before = null;
     end = LineSegments.Last();
     if(end == null){
@@ -222,27 +223,27 @@ public class BranchComponent : MonoBehaviour
     {
       if (before != null)
       {
-        spawnLeavesOverSegment(before, 2f, 0.05f);
+        //spawnLeavesOverSegment(before, baseFlowerDensity, 0.05f);
       }
       if (end != null)
       {
-        spawnLeavesOverSegment(end, 2f, 0.5f);
-        spawnFlowersOverSegment(end, 1.5f, 1f);
+        //spawnLeavesOverSegment(end, 2f, 0.5f);
+        spawnFlowersOverSegment(end, baseFlowerDensity, 1f);
       }
     }
-    else if(branchLevel == 1){
-      int i = 0;
-      foreach(LineSegment ls in LineSegments){
-        if(i != 0 && ls != end){
-          spawnLeavesOverSegment(ls, 2f, 0.05f * (i+1));
-        }
-        i++;
-      }
-      spawnLeavesOverSegment(end, 2f, 0.25f);
-    }
-    else if (branchLevel > 1)
+    // else if(branchLevel == 1){
+    //   // int i = 0;
+    //   // foreach(LineSegment ls in LineSegments){
+    //   //   if(i != 0 && ls != end){
+    //   //     spawnLeavesOverSegment(ls, 2f, 0.05f * (i+1));
+    //   //   }
+    //   //   i++;
+    //   // }
+    //   // spawnLeavesOverSegment(end, 2f, 0.25f);
+    // }
+    else //if (branchLevel > 1)
     {
-      spawnFlowersOverSegment(end, 4f * branchLevel, 0.5f * branchLevel);
+      spawnFlowersOverSegment(end, baseFlowerDensity * branchLevel, 0.75f * branchLevel);
     }
 
 
@@ -270,7 +271,7 @@ public class BranchComponent : MonoBehaviour
   }
   private void spawnLeavesOverSegment(LineSegment ls, float density, float baseDelay)
   {
-    spawnPrefabOverSegment(animatedLeafPrefab, leafAniNames, ls, density, 0.05f, baseDelay);
+    spawnPrefabOverSegment(animatedLeafPrefab, leafAniNames, ls, density, 1.75f, baseDelay);
   }
 
   private void spawnPrefabOverSegment(GameObject prefab, string[] animationNames, LineSegment ls, float density, float bufferBetween, float baseDelay)
@@ -305,7 +306,7 @@ public class BranchComponent : MonoBehaviour
         GameObject leaf = Instantiate(prefab, targetLocalPosition, Quaternion.identity, transform);
         leaf.transform.localPosition = targetLocalPosition;
         DelayedAnimationComponent delay = leaf.AddComponent<DelayedAnimationComponent>();
-        delay.delaySeconds = Random.Range(0.25f, 2f) + baseDelay;
+        delay.delaySeconds = Random.Range(0f, 0.75f);// IGNORE BASE DELAY FOR NOW + baseDelay;
         delay.animationName = animationNames[Random.Range(0, animationNames.Length)];
         added++;
       }

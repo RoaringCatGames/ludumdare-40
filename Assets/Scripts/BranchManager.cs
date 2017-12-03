@@ -138,9 +138,13 @@ public class BranchManager : MonoBehaviour
               Logger.Log("LINES CROSS AT: ", latestSegment, line);
 							bool areCrossing = false;
 							Vector2 point = LineUtils.GetIntersectionPointCoordinates(latestSegment.StartPoint, latestSegment.EndPoint, line.StartPoint, line.EndPoint, out areCrossing);
-							GameObject prefab = Resources.Load("Prefabs/Animated Leaf") as GameObject;
-							GameObject go = Instantiate(prefab, new Vector3(point.x, point.y, 0f), Quaternion.identity);
-							go.transform.localScale *= 4f;
+							// PLAY THE CRACK!
+							SoundManager.instance.PlayBackgroundSfx(3);
+							ZoomToPointComponent zoomer = gameObject.AddComponent<ZoomToPointComponent>();
+							zoomer.targetPoint = point;
+							//zoomer.timeToZoom = 0.75f;
+							zoomer.pauseTime = 0.5f;
+							
               shouldEndGame = true;
 							break;
             }

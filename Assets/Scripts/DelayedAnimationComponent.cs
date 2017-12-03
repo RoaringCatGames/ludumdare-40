@@ -20,6 +20,7 @@ public class DelayedAnimationComponent : MonoBehaviour {
 
 		if(elapsedTime >= delaySeconds){
 			if(animator != null){
+				transform.localScale = new Vector3(1f, 1f, 1f);
 				animator.Play(animationName);
 			}
 
