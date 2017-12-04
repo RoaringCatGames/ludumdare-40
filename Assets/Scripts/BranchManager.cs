@@ -7,6 +7,7 @@ public class BranchManager : MonoBehaviour
 {
 
   public static BranchManager instance;
+	public GameObject finalAnimation;
 	public GameObject treePrefab;
 
 	public bool isZenMode = false;
@@ -14,6 +15,8 @@ public class BranchManager : MonoBehaviour
 	private bool isMarkedForReset = false;
   private List<BranchComponent> branches = new List<BranchComponent>();
 	private bool hasGameEnded = false;
+
+	private GameObject runningFinalBG;
 
   // Use this for initialization
   void Awake()
@@ -23,7 +26,7 @@ public class BranchManager : MonoBehaviour
       instance = this;
 
 			if(treePrefab != null){
-				Instantiate(treePrefab, new Vector3(), Quaternion.identity);
+				Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
 			}
 
 			// LineSegment AB = new LineSegment(-1, -1, 1, 1);
@@ -56,6 +59,9 @@ public class BranchManager : MonoBehaviour
 			// Start a new Root Tree
 			GameObject tree = Instantiate(treePrefab, new Vector3(), Quaternion.identity);
 
+			if(runningFinalBG != null){
+				Destroy(runningFinalBG);
+			}
 			//Set our flag to play again
 			hasGameEnded = false;
 		}
@@ -91,6 +97,7 @@ public class BranchManager : MonoBehaviour
 				if(!isStillGrowing){
 					Logger.Log("Tree is Not Growing anymore");
 					hasGameEnded = true;
+					//runningFinalBG = Instantiate(finalAnimation, new Vector3(), Quaternion.identity);
 				}
 			}
 		}

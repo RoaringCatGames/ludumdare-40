@@ -62,7 +62,7 @@ public class SelectionPointInteractions : MonoBehaviour
 					var targetEndpoint = transform.position + clampedDistance;
 					directionRenderer.SetPositions(new Vector3[]{
 						transform.position,
-						new Vector3(targetEndpoint.x, targetEndpoint.y, 0f)
+						new Vector3(targetEndpoint.x, targetEndpoint.y, transform.position.z)
 					});
 					directionRenderer.positionCount = 2;
 				}
@@ -77,6 +77,11 @@ public class SelectionPointInteractions : MonoBehaviour
   {
     isUserDragging = true;
 		directionRenderer = gameObject.AddComponent<LineRenderer>();
+		Renderer renderer = GetComponent<Renderer>();
+		directionRenderer.sortingOrder = renderer.sortingOrder + 1;
+		directionRenderer.sortingLayerName = renderer.sortingLayerName;
+		//directionRenderer.sortingOrder = -20;
+		// directionRenderer.sortingLayerName = "Trunk";
 		directionRenderer.material = directionArrowMaterial;
 		directionRenderer.startWidth = 0.1f;
 		directionRenderer.endWidth = 0.1f;
