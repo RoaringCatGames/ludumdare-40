@@ -968,6 +968,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
         type: 2}
+      propertyPath: bloops.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
+        type: 2}
       propertyPath: ambientSfx.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -1013,6 +1018,46 @@ Prefab:
       propertyPath: Loop
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
+        type: 2}
+      propertyPath: bloops.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: b4ab2f86a115048beb0ce1fbb8614f4e, type: 3}
+    - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
+        type: 2}
+      propertyPath: bloops.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7f601f115b3b24b57a4de4b1b3a2e71c, type: 3}
+    - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
+        type: 2}
+      propertyPath: bloops.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5e55ad869ce684a4bb09e28e64110b30, type: 3}
+    - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
+        type: 2}
+      propertyPath: bloops.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8dc3865874d124181b3406de7c6ae938, type: 3}
+    - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
+        type: 2}
+      propertyPath: bloops.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3cfe15a619c4944f086737c9bc2d1101, type: 3}
+    - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
+        type: 2}
+      propertyPath: bloops.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: ae42183d8da434d50afbb1598493e492, type: 3}
+    - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
+        type: 2}
+      propertyPath: bloops.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: e1d7ef614008a4cfc81a3bb14a9f8237, type: 3}
+    - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
+        type: 2}
+      propertyPath: bloops.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: b1cb653e56cab4084b8bae156eb8c67d, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b5240204b2944e78973dd619b40c899, type: 2}
   m_IsPrefabParent: 0

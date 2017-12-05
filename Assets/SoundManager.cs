@@ -7,6 +7,8 @@ public class SoundManager : MonoBehaviour {
 	public static SoundManager instance;
 	public AudioClip backgroundMusic;
 	public AudioClip[] ambientSfx;
+	public AudioClip[] bloops;
+
 	public AudioSource music;
 	public AudioSource sfx;
 
@@ -47,5 +49,9 @@ public class SoundManager : MonoBehaviour {
 	public void PlayBackgroundSfx(int sfxPosition){
 		sfx.clip = ambientSfx[sfxPosition];
 		sfx.Play();
+	}
+
+	public void PlayRandomBloopSfx(){
+		sfx.PlayOneShot(bloops[Random.Range(0, bloops.Length)], 0.25f);
 	}
 }
