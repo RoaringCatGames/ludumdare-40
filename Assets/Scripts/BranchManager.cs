@@ -45,7 +45,7 @@ public class BranchManager : MonoBehaviour
     {
       Destroy(gameObject);
     }
-    DontDestroyOnLoad(gameObject);
+    //DontDestroyOnLoad(gameObject);
   }
 
 	void Update(){
