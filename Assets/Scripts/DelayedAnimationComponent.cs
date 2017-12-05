@@ -22,6 +22,9 @@ public class DelayedAnimationComponent : MonoBehaviour {
 			if(animator != null){
 				transform.localScale = new Vector3(1f, 1f, 1f);
 				animator.Play(animationName);
+				if(Random.Range(0f, 1f) >= 0.75f){
+					SoundManager.instance.PlayRandomBloopSfx();
+				}
 			}
 
 			Destroy(this);
