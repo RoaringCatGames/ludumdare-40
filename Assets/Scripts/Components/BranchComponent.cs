@@ -15,6 +15,7 @@ public class BranchComponent : MonoBehaviour
   public int branchLevel = 0;
 
   [Header("Growth Properties")]
+  public bool isAutomated = false;
   public float secondsBetweenSegments = 0.5f;
   public float maxHeight = 20f;
   public float maxLeftRightDistance = 10f;
@@ -80,8 +81,10 @@ public class BranchComponent : MonoBehaviour
     lineRenderer.positionCount = positions.Length;
     lineRenderer.SetPositions(positions);
 
-    // Add Ourselves to the Branch Manager
-    BranchManager.instance.AddBranch(this);
+    if(!isAutomated){
+      // Add Ourselves to the Branch Manager
+      BranchManager.instance.AddBranch(this);
+    }
   }
 
   // Update is called once per frame
@@ -90,7 +93,7 @@ public class BranchComponent : MonoBehaviour
     if (isGrowing)
     {
       // Throttle updates to 60fps
-      float throttledDeltaTime = Mathf.Clamp(Time.deltaTime, 0, 1f / 60f);
+      float throttledDeltaTime = TimeUtils.ThrottledDelta(1f / 30f);
       Vector3 topPosition = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
       Vector3[] linePositions;
       Vector3 newTopPosition;
@@ -154,17 +157,20 @@ public class BranchComponent : MonoBehaviour
          (branchLevel == 0 && childBranchCount == 0 && LineSegments.Count == TRUNK_BASE_SEGMENTS) ||
          ((childBranchCount * SEGMENTS_BETWEEN_BRANCH_POINTS) + (branchLevel == 0 ? TRUNK_BASE_SEGMENTS : SEGMENTS_BETWEEN_BRANCH_POINTS) == LineSegments.Count))
       {
-
-        GameObject selectionPoint = Instantiate(selectionPointPrefab, LineSegments.Last().StartPoint, Quaternion.identity);
-        selectionPoint.transform.parent = transform;
-        selectionPoint.transform.localPosition = LineSegments.Last().StartPoint;
-        selectionPoint.GetComponent<SelectionPointInteractions>().parentBranch = this;
-
+        if(isAutomated){
+          AddBranchLocal(LineSegments.Last().StartPoint, Random.Range(0f, 1f) > 0.5f ? 90f : -90f);
+        }else{
+          GameObject selectionPoint = Instantiate(selectionPointPrefab, LineSegments.Last().StartPoint, Quaternion.identity);
+          selectionPoint.transform.parent = transform;
+          selectionPoint.transform.localPosition = LineSegments.Last().StartPoint;
+          selectionPoint.GetComponent<SelectionPointInteractions>().parentBranch = this;
+        }
         childBranchCount += 1;
       }
     }
 
-    if (!isGrowing && !hasSpawnedFoliage && BranchManager.instance.IsGameOver())
+    if((isAutomated && !isGrowing && !hasSpawnedFoliage) ||
+       (!isGrowing && !hasSpawnedFoliage && BranchManager.instance != null && BranchManager.instance.IsGameOver()))
     {
       spawnFoliage();
     }
@@ -172,8 +178,6 @@ public class BranchComponent : MonoBehaviour
 
   public void AddBranch(Vector3 worldStartPoint, Vector3 worldDirection)
   {
-    GameObject newChild = new GameObject();
-    newChild.transform.parent = transform;
 
     Vector3 localPoint = transform.InverseTransformPoint(worldStartPoint);
     Vector3 localDirection = transform.InverseTransformDirection(worldDirection);
@@ -183,16 +187,30 @@ public class BranchComponent : MonoBehaviour
     //  direction needs to have 90 degrees pulled off to account
     //  for it.
     branchRotation -= 90f;
+
+    AddBranchLocal(localPoint, branchRotation);
+  }
+
+  private void AddBranchLocal(Vector3 localPoint, float rotation){
+
+    GameObject newChild = new GameObject();
+    newChild.transform.parent = transform;
+
     // If we are in a child level, we need to add the parent branch
     //  rotation object to make sure we are calculated in nested
     //  rotations due to calculating from world units.
-    branchRotation += transform.rotation.eulerAngles.z;
+    float branchRotation = rotation + transform.rotation.eulerAngles.z;
 
     newChild.transform.rotation = Quaternion.Euler(0f, 0f, branchRotation);
     newChild.transform.localPosition = localPoint;
 
     float remainingBranchDistanceRatio = (maxHeight - newChild.transform.localPosition.y) / maxHeight;
     BranchComponent newBranch = newChild.AddComponent<BranchComponent>();
+    
+    if(isAutomated){
+      newBranch.isAutomated = isAutomated;
+      newBranch.secondsBetweenSegments = secondsBetweenSegments;
+    }
     newBranch.branchMaterial = new Material(branchMaterial);
     newBranch.branchLevel = branchLevel + 1;
     newBranch.maxBaseWidth = maxBaseWidth * CHILD_BRANCH_SCALE_FACTOR * remainingBranchDistanceRatio;
