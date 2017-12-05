@@ -117,6 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 39455789}
   - component: {fileID: 39455790}
+  - component: {fileID: 39455791}
   m_Layer: 0
   m_Name: dont-cross
   m_TagString: Untagged
@@ -131,8 +132,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 39455788}
   m_LocalRotation: {x: 0, y: 0, z: -0.002181689, w: 0.9999976}
-  m_LocalPosition: {x: 2.54, y: 7.47, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 0.66, y: -3.53, z: 0}
+  m_LocalScale: {x: 2.0908544, y: 2.0908544, z: 1.0454272}
   m_Children: []
   m_Father: {fileID: 446965836}
   m_RootOrder: 2
@@ -170,7 +171,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d3021303162be46ba80ebad1f34ec7b0, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -179,6 +180,23 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!95 &39455791
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 39455788}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dbe9d385a1907f940b4a3970f5984228, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &134701969
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,6 +327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 392121642}
   - component: {fileID: 392121643}
+  - component: {fileID: 392121644}
   m_Layer: 0
   m_Name: LeftBranch
   m_TagString: Untagged
@@ -430,6 +449,23 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!95 &392121644
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 392121641}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fc1fb05dcc00179499d592a0b2966c3d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &403972191
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,6 +1525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2062737397}
   - component: {fileID: 2062737396}
+  - component: {fileID: 2062737398}
   m_Layer: 0
   m_Name: how-to
   m_TagString: Untagged
@@ -1528,8 +1565,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f227e2572d1f34027982b89ec758b7a1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 38296d8f55c9e254fa50cda3990c8d4c, type: 3}
+  m_Color: {r: 0.12941177, g: 0.69411767, b: 0.65882355, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1544,10 +1581,27 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2062737395}
-  m_LocalRotation: {x: -0, y: -0, z: 0.2164396, w: 0.97629607}
-  m_LocalPosition: {x: -4.3, y: 16.3, z: 0}
-  m_LocalScale: {x: 2.4000003, y: 2.4000003, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.0135015305, w: -0.99990886}
+  m_LocalPosition: {x: -6.55, y: 15.53, z: 0}
+  m_LocalScale: {x: 2.4096437, y: 2.4096437, z: 1.004018}
   m_Children: []
   m_Father: {fileID: 134701970}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 25}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.547}
+--- !u!95 &2062737398
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2062737395}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6abfddd8e6556bc4b883748d5630ae6c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
