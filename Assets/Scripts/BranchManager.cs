@@ -57,7 +57,7 @@ public class BranchManager : MonoBehaviour
 			});
 			branches.Clear();
 			// Start a new Root Tree
-			GameObject tree = Instantiate(treePrefab, new Vector3(), Quaternion.identity);
+			GameObject tree = Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
 
 			if(runningFinalBG != null){
 				Destroy(runningFinalBG);
