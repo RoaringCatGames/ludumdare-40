@@ -40,46 +40,57 @@ public class BranchComponent : MonoBehaviour
   [HideInInspector]
   public BranchComponent parentBranch;
 
-  private LineRenderer lineRenderer;
-  private float elapsedTime = 0f;
-  private Vector3 nextTargetPosition;
-  private int childBranchCount = 0;
-  private bool hasSpawnedFoliage = false;
+  private LineRenderer _lineRenderer;
+  private float _elapsedTime = 0f;
+  private Vector3 _nextTargetPosition;
+  private int _childBranchCount = 0;
+  private bool _hasSpawnedFoliage = false;
+  private string[] _leafAniNames = new string[]{
+    "leaf-1",
+    "leaf-2",
+    "leaf-3",
+    "leaf-4",
+    "leaf-5"
+  };
 
+  private string[] _flowerAniNames = new string[] {
+    "Bloom 1",
+    "Bloom 2",
+    "Bloom 3"
+  };
+
+  private LineSegment _lastSegment;
+  private List<LineSegment> _worldLineSegments = new List<LineSegment>();
+
+  [HideInInspector]
   public List<LineSegment> WorldLineSegments
   {
     get
     {
-      return LineSegments.Select((ls) =>
-      {
-        return new LineSegment(
-          transform.TransformPoint(ls.StartPoint),
-          transform.TransformPoint(ls.EndPoint)
-        );
-      }).ToList();
+      return _worldLineSegments;
     }
   }
 
   // Use this for initialization
   void Start()
   {
-    lineRenderer = GetComponent<LineRenderer>();
+    _lineRenderer = GetComponent<LineRenderer>();
 
-    if (lineRenderer == null)
+    if (_lineRenderer == null)
     {
-      lineRenderer = this.gameObject.AddComponent<LineRenderer>();
-      lineRenderer.textureMode = LineTextureMode.DistributePerSegment;
-      lineRenderer.material = branchMaterial;
-      lineRenderer.numCornerVertices = 10;
-      lineRenderer.useWorldSpace = false;
+      _lineRenderer = this.gameObject.AddComponent<LineRenderer>();
+      _lineRenderer.textureMode = LineTextureMode.DistributePerSegment;
+      _lineRenderer.material = branchMaterial;
+      _lineRenderer.numCornerVertices = 10;
+      _lineRenderer.useWorldSpace = false;
     }
 
     Vector3[] positions = new Vector3[] {
       new Vector3(0, 0, 0)
     };
 
-    lineRenderer.positionCount = positions.Length;
-    lineRenderer.SetPositions(positions);
+    _lineRenderer.positionCount = positions.Length;
+    _lineRenderer.SetPositions(positions);
 
     if(!isAutomated){
       // Add Ourselves to the Branch Manager
@@ -94,37 +105,35 @@ public class BranchComponent : MonoBehaviour
     {
       // Throttle updates to 60fps
       float throttledDeltaTime = TimeUtils.ThrottledDelta(1f / 30f);
-      Vector3 topPosition = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
+      Vector3 topPosition = _lineRenderer.GetPosition(_lineRenderer.positionCount - 1);
       Vector3[] linePositions;
       Vector3 newTopPosition;
-      int linePositionsSize = lineRenderer.positionCount;
+      int linePositionsSize = _lineRenderer.positionCount;
 
-      if (lineRenderer.positionCount == 1 || topPosition.x == nextTargetPosition.x && topPosition.y == nextTargetPosition.y)
+      if (_lineRenderer.positionCount == 1 || topPosition.x == _nextTargetPosition.x && topPosition.y == _nextTargetPosition.y)
       {
         //Generate  new
-        nextTargetPosition = generateNextPoint(topPosition);
+        _nextTargetPosition = _generateNextPoint(topPosition);
 
         //Add a new position to our linePositions
         linePositionsSize += 1;
         //Duplicate Top Position
         newTopPosition = topPosition;
-        LineSegments.Add(new LineSegment(topPosition, newTopPosition));
+        //LineSegments.Add(new LineSegment(topPosition, newTopPosition));
+        _addLineSegment(topPosition, newTopPosition);
 
-        elapsedTime = 0f;
+        _elapsedTime = 0f;
       }
       else
       {
         // Lerp to Target!!
-        elapsedTime += throttledDeltaTime;
-        float positionOfGrowthTime = elapsedTime / secondsBetweenSegments;
-        Vector3 prevPosition = lineRenderer.GetPosition(lineRenderer.positionCount - 2);
-        newTopPosition = Vector3.Lerp(prevPosition, nextTargetPosition, positionOfGrowthTime);
+        _elapsedTime += throttledDeltaTime;
+        float positionOfGrowthTime = _elapsedTime / secondsBetweenSegments;
+        Vector3 prevPosition = _lineRenderer.GetPosition(_lineRenderer.positionCount - 2);
+        newTopPosition = Vector3.Lerp(prevPosition, _nextTargetPosition, positionOfGrowthTime);
 
         //Update our last Line Segment
-        LineSegment currentSegment = LineSegments.Last();
-        LineSegments.Last().EndPoint = newTopPosition;
-
-
+        _updateLatestLineSegment(topPosition);
       }
 
       //Once we hit our length, stop growing
@@ -135,16 +144,16 @@ public class BranchComponent : MonoBehaviour
 
       //Reset Positions
       linePositions = new Vector3[linePositionsSize];
-      lineRenderer.GetPositions(linePositions);
+      _lineRenderer.GetPositions(linePositions);
       linePositions[linePositions.Length - 1] = newTopPosition;
-      lineRenderer.positionCount = linePositions.Length;
+      _lineRenderer.positionCount = linePositions.Length;
       float branchHeight = Vector3.Distance(newTopPosition, linePositions[0]);
       float baseWidth = Mathf.Clamp((branchHeight / maxHeight) * maxBaseWidth, tipWidth, maxBaseWidth);
-      lineRenderer.widthCurve = new AnimationCurve(
+      _lineRenderer.widthCurve = new AnimationCurve(
         new Keyframe(0f, baseWidth),
         new Keyframe(1f, tipWidth)
       );
-      lineRenderer.SetPositions(linePositions);
+      _lineRenderer.SetPositions(linePositions);
 
 
       // Rules:
@@ -154,25 +163,25 @@ public class BranchComponent : MonoBehaviour
       //      for segments on the trunk after the first, we need to make sure to account for the Base Trunk
       //      segments.
       if (branchLevel <= MAX_BRANCH_DEPTH &&
-         (branchLevel == 0 && childBranchCount == 0 && LineSegments.Count == TRUNK_BASE_SEGMENTS) ||
-         ((childBranchCount * SEGMENTS_BETWEEN_BRANCH_POINTS) + (branchLevel == 0 ? TRUNK_BASE_SEGMENTS : SEGMENTS_BETWEEN_BRANCH_POINTS) == LineSegments.Count))
+         (branchLevel == 0 && _childBranchCount == 0 && LineSegments.Count == TRUNK_BASE_SEGMENTS) ||
+         ((_childBranchCount * SEGMENTS_BETWEEN_BRANCH_POINTS) + (branchLevel == 0 ? TRUNK_BASE_SEGMENTS : SEGMENTS_BETWEEN_BRANCH_POINTS) == LineSegments.Count))
       {
         if(isAutomated){
-          AddBranchLocal(LineSegments.Last().StartPoint, Random.Range(0f, 1f) > 0.5f ? 90f : -90f);
+          _addBranchLocal(_lastSegment.StartPoint, Random.Range(0f, 1f) > 0.5f ? 90f : -90f);
         }else{
-          GameObject selectionPoint = Instantiate(selectionPointPrefab, LineSegments.Last().StartPoint, Quaternion.identity);
+          GameObject selectionPoint = Instantiate(selectionPointPrefab, _lastSegment.StartPoint, Quaternion.identity);
           selectionPoint.transform.parent = transform;
-          selectionPoint.transform.localPosition = LineSegments.Last().StartPoint;
+          selectionPoint.transform.localPosition = _lastSegment.StartPoint;
           selectionPoint.GetComponent<SelectionPointInteractions>().parentBranch = this;
         }
-        childBranchCount += 1;
+        _childBranchCount += 1;
       }
     }
 
-    if((isAutomated && !isGrowing && !hasSpawnedFoliage) ||
-       (!isGrowing && !hasSpawnedFoliage && BranchManager.instance != null && BranchManager.instance.IsGameOver()))
+    if((isAutomated && !isGrowing && !_hasSpawnedFoliage) ||
+       (!isGrowing && !_hasSpawnedFoliage && BranchManager.instance != null && BranchManager.instance.IsGameOver()))
     {
-      spawnFoliage();
+      _spawnFoliage();
     }
   }
 
@@ -188,10 +197,26 @@ public class BranchComponent : MonoBehaviour
     //  for it.
     branchRotation -= 90f;
 
-    AddBranchLocal(localPoint, branchRotation);
+    _addBranchLocal(localPoint, branchRotation);
   }
 
-  private void AddBranchLocal(Vector3 localPoint, float rotation){
+  private void _addLineSegment(Vector3 start, Vector3 end){
+    _lastSegment = new LineSegment(start, end);  
+    LineSegments.Add(_lastSegment);
+
+    // Calculate the World Segment
+    _worldLineSegments.Add(new LineSegment(
+      transform.TransformPoint(start),
+      transform.TransformPoint(end)
+    ));
+  }
+
+  private void _updateLatestLineSegment(Vector3 newEndpoint){
+    _lastSegment.EndPoint = newEndpoint;
+    _worldLineSegments.Last().EndPoint = transform.TransformPoint(newEndpoint);
+  }
+
+  private void _addBranchLocal(Vector3 localPoint, float rotation){
 
     GameObject newChild = new GameObject();
     newChild.transform.parent = transform;
@@ -223,11 +248,11 @@ public class BranchComponent : MonoBehaviour
     newBranch.animatedLeafPrefab = animatedLeafPrefab;
   }
 
-  private void spawnFoliage()
+  private void _spawnFoliage()
   {
     float baseFlowerDensity = 6f;
     LineSegment end = null, before = null;
-    end = LineSegments.Last();
+    end = _lastSegment;
     if(end == null){
       return;
     }
@@ -246,7 +271,7 @@ public class BranchComponent : MonoBehaviour
       if (end != null)
       {
         //spawnLeavesOverSegment(end, 2f, 0.5f);
-        spawnFlowersOverSegment(end, baseFlowerDensity, 1f);
+        _spawnFlowersOverSegment(end, baseFlowerDensity, 1f);
       }
     }
     // else if(branchLevel == 1){
@@ -261,44 +286,27 @@ public class BranchComponent : MonoBehaviour
     // }
     else //if (branchLevel > 1)
     {
-      spawnFlowersOverSegment(end, baseFlowerDensity * branchLevel, 0.75f * branchLevel);
+      _spawnFlowersOverSegment(end, baseFlowerDensity * branchLevel, 0.75f * branchLevel);
     }
-
-
-
-    hasSpawnedFoliage = true;
+    
+    _hasSpawnedFoliage = true;
   }
 
-  private string[] leafAniNames = new string[]{
-    "leaf-1",
-    "leaf-2",
-    "leaf-3",
-    "leaf-4",
-    "leaf-5"
-  };
-
-  private string[] flowerAniNames = new string[] {
-    "Bloom 1",
-    "Bloom 2",
-    "Bloom 3"
-  };
-
-  private void spawnFlowersOverSegment(LineSegment ls, float density, float baseDelay)
+  private void _spawnFlowersOverSegment(LineSegment ls, float density, float baseDelay)
   {
-    spawnPrefabOverSegment(animatedFlowerPrefab, flowerAniNames, ls, density, 1.75f, baseDelay);
+    _spawnPrefabOverSegment(animatedFlowerPrefab, _flowerAniNames, ls, density, 1.75f, baseDelay);
   }
-  private void spawnLeavesOverSegment(LineSegment ls, float density, float baseDelay)
+  private void _spawnLeavesOverSegment(LineSegment ls, float density, float baseDelay)
   {
-    spawnPrefabOverSegment(animatedLeafPrefab, leafAniNames, ls, density, 1.75f, baseDelay);
+    _spawnPrefabOverSegment(animatedLeafPrefab, _leafAniNames, ls, density, 1.75f, baseDelay);
   }
 
-  private void spawnPrefabOverSegment(GameObject prefab, string[] animationNames, LineSegment ls, float density, float bufferBetween, float baseDelay)
+  private void _spawnPrefabOverSegment(GameObject prefab, string[] animationNames, LineSegment ls, float density, float bufferBetween, float baseDelay)
   {
     Vector3 dir = ls.Direction().normalized;
     float length = ls.Length();
 
     float stepMagnitude = length / density;
-    float placementOffset = stepMagnitude * 0.25f;
     dir *= stepMagnitude;
     Vector3 stepVector = dir;
 
@@ -331,13 +339,13 @@ public class BranchComponent : MonoBehaviour
     }
   }
 
-  private bool isVectorEmpty(Vector3 inVector)
+  private bool _isVectorEmpty(Vector3 inVector)
   {
     return inVector.x == 0f && inVector.y == 0f && inVector.z == 0f;
   }
-  private Vector3 generateNextPoint(Vector3 lastPoint)
+  private Vector3 _generateNextPoint(Vector3 lastPoint)
   {
-    if (lineRenderer.positionCount == 1)
+    if (_lineRenderer.positionCount == 1)
     {
       return new Vector3(firstPosition.x, firstPosition.y, 0f);
     }

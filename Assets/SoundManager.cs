@@ -12,8 +12,6 @@ public class SoundManager : MonoBehaviour {
 	public AudioSource music;
 	public AudioSource sfx;
 
-	private float elapsedTime = 0f;
-	private float pauseTime = 2f;
 	// Use this for initialization
 	void Start () {
 
@@ -26,18 +24,6 @@ public class SoundManager : MonoBehaviour {
 		}
 
 		DontDestroyOnLoad(gameObject);
-	}
-
-
-	void Update(){
-		// if(!sfx.isPlaying) {
-		// 	elapsedTime += Time.deltaTime;
-
-		// 	if(elapsedTime >= pauseTime){
-		// 		pauseTime = Random.Range(1.5f, 5f);
-		// 		PlayBackgroundSfx(Random.Range(0, ambientSfx.Length));
-		// 	}
-		// }
 	}
 
 	

@@ -12,11 +12,11 @@ public class BranchManager : MonoBehaviour
 
 	public bool isZenMode = false;
 
-	private bool isMarkedForReset = false;
-  private List<BranchComponent> branches = new List<BranchComponent>();
-	private bool hasGameEnded = false;
+	private bool _isMarkedForReset = false;
+  private List<BranchComponent> _branches = new List<BranchComponent>();
+	private bool _hasGameEnded = false;
 
-	private GameObject runningFinalBG;
+	//private GameObject runningFinalBG;
 
   // Use this for initialization
   void Awake()
@@ -49,36 +49,36 @@ public class BranchManager : MonoBehaviour
   }
 
 	void Update(){
-		if(isMarkedForReset){
-			isMarkedForReset = false;
+		if(_isMarkedForReset){
+			_isMarkedForReset = false;
 			// Delete All Branches
-			branches.ForEach((branch) => {
+			_branches.ForEach((branch) => {
 				Destroy(branch.gameObject);
 			});
-			branches.Clear();
+			_branches.Clear();			
 			// Start a new Root Tree
-			GameObject tree = Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
+			Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
 
-			if(runningFinalBG != null){
-				Destroy(runningFinalBG);
-			}
+			// if(runningFinalBG != null){
+			// 	Destroy(runningFinalBG);
+			// }
 			//Set our flag to play again
-			hasGameEnded = false;
+			_hasGameEnded = false;
 		}
 	}
 	
   // Update is called once per frame
   void LateUpdate()
   {
-		if(!hasGameEnded){
+		if(!_hasGameEnded){
 			if(!isZenMode){
-				bool collisionFound = checkForCollisions();
+				bool collisionFound = _checkForCollisions();
 
 				if(collisionFound){
-					hasGameEnded = true;
+					_hasGameEnded = true;
 					// Trigger Final Flowering
 					// Stop All Branches from Growing further
-					branches.ForEach((b) => b.isGrowing = false);
+					_branches.ForEach((b) => b.isGrowing = false);
 					foreach(var spi in FindObjectsOfType(typeof(SelectionPointInteractions))){
 						if(spi is GameObject){
 							Destroy(spi);
@@ -86,17 +86,13 @@ public class BranchManager : MonoBehaviour
 							Destroy(((SelectionPointInteractions)spi).gameObject);
 						}
 					}
-
-					// TODO: Play SFX
-
 				}
 			}
 
-			if(!hasGameEnded){
-				bool isStillGrowing = isTreeStillGrowing();
+			if(!_hasGameEnded){
+				bool isStillGrowing = _isTreeStillGrowing();
 				if(!isStillGrowing){
-					Logger.Log("Tree is Not Growing anymore");
-					hasGameEnded = true;
+					_hasGameEnded = true;
 					//runningFinalBG = Instantiate(finalAnimation, new Vector3(), Quaternion.identity);
 				}
 			}
@@ -105,32 +101,32 @@ public class BranchManager : MonoBehaviour
 
   public void AddBranch(BranchComponent branch)
   {
-    branches.Add(branch);
+    _branches.Add(branch);
   }
 
 	public bool IsGameOver(){
-		return hasGameEnded;
+		return _hasGameEnded;
 	}
 
 	public void ResetScene(){
-		isMarkedForReset = true;
+		_isMarkedForReset = true;
 	}
 
-	private bool isTreeStillGrowing(){
-		int growingBranchCount = branches.Where((b) => b.isGrowing).Count();
+	private bool _isTreeStillGrowing(){
+		int growingBranchCount = _branches.Where((b) => b.isGrowing).Count();
 
 		// If we are growing any branches, or any branch points are still active
 		//	the game is still alive. Also if the first branch hasn't been added
 		//	yet, we are still alive.
-		return branches.Count == 0 || growingBranchCount > 0 || FindObjectsOfType(typeof(SelectionPointInteractions)).Length > 0;
+		return _branches.Count == 0 || growingBranchCount > 0 || FindObjectsOfType(typeof(SelectionPointInteractions)).Length > 0;
 	}
-	private bool checkForCollisions(){
+	private bool _checkForCollisions(){
 		bool shouldEndGame = false;
     // For every Branch that is growing, we need to check if it's crossing other branches.
-    foreach (BranchComponent branch in branches.Where((b) => b.isGrowing && b.LineSegments.Count > 0))
+    foreach (BranchComponent branch in _branches.Where((b) => b.isGrowing && b.LineSegments.Count > 0))
     {
       LineSegment latestSegment = branch.WorldLineSegments.Last();
-      foreach (BranchComponent other in branches)
+      foreach (BranchComponent other in _branches)
       {
         if (branch != other && (branch.parentBranch == null || branch.parentBranch != other))
         {
@@ -141,8 +137,7 @@ public class BranchManager : MonoBehaviour
             bool areSameOrigin = latestSegment.StartPoint == line.StartPoint;
             bool doCross = !areSameOrigin && LineUtils.CrossProductIntersectTest(latestSegment, line);
             if (doCross)
-            {
-              Logger.Log("LINES CROSS AT: ", latestSegment, line);
+            {              
 							bool areCrossing = false;
 							Vector2 point = LineUtils.GetIntersectionPointCoordinates(latestSegment.StartPoint, latestSegment.EndPoint, line.StartPoint, line.EndPoint, out areCrossing);
 							// PLAY THE CRACK!
