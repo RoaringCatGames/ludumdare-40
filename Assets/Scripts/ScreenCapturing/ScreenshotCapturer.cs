@@ -36,7 +36,9 @@ public class ScreenshotCapturer : MonoBehaviour
     ScreenCapture.CaptureScreenshot(screenshotPath, 2);
     yield return null;
     
-    
+    FileImageComponent fileImage = twitterUI.GetComponentInChildren<FileImageComponent>();
+    fileImage.ApplyImage(screenshotPath);
+
     twitterAnimator.Play("twitter-ui-enter");
 
     // Show UI after we're done
