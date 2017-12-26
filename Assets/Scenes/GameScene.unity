@@ -281,6 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48415f09f50f1441fb9b8e04ce4ec757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filePath: 
 --- !u!1 &128385848
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,6 +293,7 @@ GameObject:
   - component: {fileID: 128385852}
   - component: {fileID: 128385851}
   - component: {fileID: 128385850}
+  - component: {fileID: 128385853}
   m_Layer: 5
   m_Name: ShareButton
   m_TagString: Untagged
@@ -356,7 +358,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 128385851}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 128385853}
+        m_MethodName: ShareImage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &128385851
@@ -392,6 +405,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 128385848}
+--- !u!114 &128385853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 128385848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb9890b464cb4be19ec281834f7ceee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  twitterSecretJsonPath: Data/twitter.secret
+  fileImageComponent: {fileID: 63077559}
+  tweetText: {fileID: 1012995081}
 --- !u!1001 &150101162
 Prefab:
   m_ObjectHideFlags: 0

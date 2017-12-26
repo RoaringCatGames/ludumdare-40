@@ -18,6 +18,7 @@ namespace Twitter
       this.UserId = userId;
       this.ScreenName = screenName;
     }
+
     public string Token { get; set; }
     public string TokenSecret { get; set; }
     public string UserId { get; set; }

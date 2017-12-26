@@ -239,8 +239,8 @@ MonoBehaviour:
   POST_TWEET_Y: 0.5
   POST_TWEET_WIDTH: 0.18
   POST_TWEET_HEIGHT: 0.05
-  CONSUMER_KEY: oBWUO1QvBV6mFrgalSshRGbCw
-  CONSUMER_SECRET: KaVKvpVTr2zZ3lvazpoRO0R11XmOcx9HnkYXxvTuKP4RsZa2l8
+  CONSUMER_KEY: 
+  CONSUMER_SECRET: 
 --- !u!196 &14
 NavMeshSettings:
   serializedVersion: 2

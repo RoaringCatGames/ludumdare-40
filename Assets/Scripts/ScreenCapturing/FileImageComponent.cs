@@ -5,14 +5,17 @@ using UnityEngine.UI;
 
 public class FileImageComponent : MonoBehaviour {
     
-  private string filePath;  
+  [HideInInspector]
+  public string filePath;  
+
   private Image imageComponent;
 
   void Awake(){
     imageComponent = GetComponent<Image>();
   }
 
-  public void ApplyImage(string filePath){
+  public void ApplyImage(string _filePath){
+    this.filePath = _filePath;
     Texture2D t2d = this._loadTexture(filePath);
     RectTransform rect = imageComponent.transform as RectTransform;
     // Retain Ratio    
