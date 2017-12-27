@@ -12,11 +12,14 @@ public class FileImageComponent : MonoBehaviour {
 
   void Awake(){
     imageComponent = GetComponent<Image>();
+    if(!string.IsNullOrEmpty(filePath)){
+      ApplyImage(filePath);
+    }
   }
 
   public void ApplyImage(string _filePath){
     this.filePath = _filePath;
-    Texture2D t2d = this._loadTexture(filePath);
+    Texture2D t2d = CachedResource.LoadFile(filePath);
     RectTransform rect = imageComponent.transform as RectTransform;
     // Retain Ratio    
     float aspectRatio = (float)t2d.width/(float)t2d.height;   
@@ -35,23 +38,5 @@ public class FileImageComponent : MonoBehaviour {
     screenshotSprite = Sprite.Create(t2d, new Rect(0, 0, t2d.width, t2d.height), new Vector2(0, 0), 100f);
 
     imageComponent.sprite = screenshotSprite;
-  }
-
-  private Texture2D _loadTexture(string FilePath)
-  {
-
-    // Load a PNG or JPG file from disk to a Texture2D
-    // Returns null if load fails
-    Texture2D Tex2D;
-    byte[] FileData;
-
-    if (File.Exists(FilePath))
-    {
-      FileData = File.ReadAllBytes(FilePath);
-      Tex2D = new Texture2D(2, 2);           // Create new "empty" texture
-      if (Tex2D.LoadImage(FileData))           // Load the imagedata into the texture (size is set automatically)
-        return Tex2D;                 // If data = readable -> return texture
-    }
-    return null;                     // Return null if load failed
   }
 }

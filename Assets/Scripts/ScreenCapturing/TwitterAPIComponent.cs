@@ -9,21 +9,25 @@ using Twitter;
 
 public class TwitterAPIComponent : MonoBehaviour
 {
-  private static readonly string PREFS_TWITTER_ACCESS_KEY = "TwitterAccessToken";
+  private static readonly string PREFS_TWITTER_ACCESS_KEY = "twitter-access-data";//"TwitterAccessToken";
+  private static readonly int PIN_LENGTH = 7;
 
   public string twitterSecretJsonPath = "Data/twitter.secret";
 
   public FileImageComponent fileImageComponent;
   public Text tweetText;
+  public GameObject pinInputObject;
 
   private string consumerKey;
   private string consumerSecret;
 
 
-  private string pin;  
+  private string pin;
   private TwitterRequestToken requestToken;
   private TwitterAccessToken accessToken;
   private TwitterClient twitterClient;
+
+  private bool isPromptingForPin = false;
 
   void Start()
   {
@@ -41,32 +45,28 @@ public class TwitterAPIComponent : MonoBehaviour
     twitterClient = new TwitterClient(consumerKey, consumerSecret);
   }
 
+  void OnGUI()
+  {
+    if (pinInputObject != null && pinInputObject.activeSelf)
+    {
+      pin = pinInputObject.GetComponentInChildren<Text>().text;      
+    }
+  }
+
   public void ShareImage()
   {
-    if (accessToken == null)
+    if (accessToken == null && !isPromptingForPin)
     {
-      SetupAccess();
+      StartCoroutine(twitterClient.GenerateRequestToken(ProcessRequestTokenResponse));
+    }
+    else if (isPromptingForPin && hasPinEntered())
+    {
+      StartCoroutine(twitterClient.GenerateAccessToken(requestToken.oauth_token, pin, ProcessAccessTokenResponse));
     }
     else
     {
-      Logger.Log("Sending Tweet with image ", fileImageComponent.filePath);
-      //TODO: Share Image
-      byte[] imgBinary = File.ReadAllBytes(fileImageComponent.filePath);
-      string imgbase64 = System.Convert.ToBase64String(imgBinary);
-      StartCoroutine(twitterClient.PostTweetWithMedia(
-        tweetText.text,
-        imgbase64,
-        accessToken.Token,
-        accessToken.TokenSecret,
-        this.OnTweetPosted));
+      SubmitTweetWithImage();
     }
-  }
-  public void SetupAccess()
-  {
-    Logger.Log("SUP??");
-    //StartCoroutine(Twitter.API.GetRequestToken(consumerKey, consumerSecret, new Twitter.RequestTokenCallback(this.ProcessRequestTokenResponse)));
-
-    StartCoroutine(twitterClient.GenerateRequestToken(ProcessRequestTokenResponse));
   }
 
   private void ProcessRequestTokenResponse(bool success, string responseJson)
@@ -79,6 +79,8 @@ public class TwitterAPIComponent : MonoBehaviour
       Application.OpenURL(twitterClient.GetAppAuthorizationUrl(requestToken.oauth_token));
 
       /// TODO: Prompt For PIN
+      pinInputObject.SetActive(true);
+      isPromptingForPin = true;
     }
     else
     {
@@ -89,8 +91,18 @@ public class TwitterAPIComponent : MonoBehaviour
   {
     if (success)
     {
-      TwitterAccessToken token = JsonUtility.FromJson<TwitterAccessToken>(response);
-      Logger.Log("Token", token);
+      Logger.Log("Access Token Response: ", response);
+      var token = JsonUtility.FromJson<TwitterRawAccessToken>(response);
+      accessToken = new TwitterAccessToken(
+        token.oauth_token,
+        token.oauth_token_secret,
+        token.user_id,
+        token.screen_name
+      );
+      Logger.Log("Token", accessToken);
+
+      StoreAccessToken(accessToken);
+      SubmitTweetWithImage();      
     }
     else
     {
@@ -98,26 +110,54 @@ public class TwitterAPIComponent : MonoBehaviour
     }
   }
 
-  private void OnTweetPosted(bool success, string response) {
-    if(success) {
+  private void SubmitTweetWithImage()
+  {
+    Logger.Log("Sending Tweet with image ", fileImageComponent.filePath);
+    byte[] imgBinary = File.ReadAllBytes(fileImageComponent.filePath);
+    string imgbase64 = System.Convert.ToBase64String(imgBinary);
+    StartCoroutine(twitterClient.PostTweetWithMedia(
+      tweetText.text,
+      imgbase64,
+      accessToken.Token,
+      accessToken.TokenSecret,
+      this.OnTweetPosted));
+  }
+
+  private void OnTweetPosted(bool success, string response)
+  {
+    if (success)
+    {
       Logger.Log("SUCCESS", response);
-    }else{
+    }
+    else
+    {
       Logger.Log("FAILED", response);
     }
   }
 
+  private bool hasPinEntered()
+  {
+    return pinInputObject != null && pin != null && pin.Length == PIN_LENGTH;
+  }
+
   private void LoadStoredAccessToken()
   {
-
     string accessDetails = PlayerPrefs.GetString(PREFS_TWITTER_ACCESS_KEY);
     Logger.Log("Found String is: ", accessDetails);
 
     accessToken = TwitterAccessToken.FromString(accessDetails);
+    if(string.IsNullOrEmpty(accessToken.Token) ||
+       string.IsNullOrEmpty(accessToken.TokenSecret) ||
+       string.IsNullOrEmpty(accessToken.UserId) ||
+       string.IsNullOrEmpty(accessToken.ScreenName)){
+         Logger.Log("Stored Access Token has Empty Values. Discarding");
+         accessToken = null;
+       }
   }
 
   private void StoreAccessToken(TwitterAccessToken token)
   {
-    PlayerPrefs.GetString(token.ToString());
+    PlayerPrefs.SetString(PREFS_TWITTER_ACCESS_KEY, token.ToString());
   }
 
 
