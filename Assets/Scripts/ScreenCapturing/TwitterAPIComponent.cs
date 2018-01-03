@@ -5,7 +5,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using Twitter;
+
+[Serializable]
+public class TwitterErrorEvent : UnityEvent<string> {}
 
 public class TwitterAPIComponent : MonoBehaviour
 {
@@ -13,10 +17,11 @@ public class TwitterAPIComponent : MonoBehaviour
   private static readonly int PIN_LENGTH = 7;
 
   public string twitterSecretJsonPath = "Data/twitter.secret";
-
   public FileImageComponent fileImageComponent;
   public Text tweetText;
   public GameObject pinInputObject;
+  public GameObject submissionIndicator;
+  public TwitterErrorEvent onErrorEvent;
 
   private string consumerKey;
   private string consumerSecret;
@@ -28,6 +33,7 @@ public class TwitterAPIComponent : MonoBehaviour
   private TwitterClient twitterClient;
 
   private bool isPromptingForPin = false;
+  private bool isSubmittingTweet = false;
 
   void Start()
   {
@@ -51,20 +57,31 @@ public class TwitterAPIComponent : MonoBehaviour
     {
       pin = pinInputObject.GetComponentInChildren<Text>().text;      
     }
+
+    submissionIndicator.SetActive(isSubmittingTweet);
   }
 
   public void ShareImage()
   {
+    // Do Nothing if already submitting
+    if(isSubmittingTweet){
+      return;
+    }
+
     if (accessToken == null && !isPromptingForPin)
     {
       StartCoroutine(twitterClient.GenerateRequestToken(ProcessRequestTokenResponse));
     }
     else if (isPromptingForPin && hasPinEntered())
     {
+      isSubmittingTweet = true;
+      //submissionIndicator.SetActive(true);
       StartCoroutine(twitterClient.GenerateAccessToken(requestToken.oauth_token, pin, ProcessAccessTokenResponse));
     }
     else
     {
+      isSubmittingTweet = true;
+      //submissionIndicator.SetActive(true);
       SubmitTweetWithImage();
     }
   }
@@ -85,6 +102,7 @@ public class TwitterAPIComponent : MonoBehaviour
     else
     {
       Logger.Log("Error while getting RequestToken");
+      onErrorEvent.Invoke("Could not Generate Request Token");
     }
   }
   private void ProcessAccessTokenResponse(bool success, string response)
@@ -107,6 +125,10 @@ public class TwitterAPIComponent : MonoBehaviour
     else
     {
       Logger.Log("FAILED", response);
+      isSubmittingTweet = false;
+      //submissionIndicator.SetActive(false);
+      onErrorEvent.Invoke(response);
+      
     }
   }
 
@@ -128,10 +150,16 @@ public class TwitterAPIComponent : MonoBehaviour
     if (success)
     {
       Logger.Log("SUCCESS", response);
+      isSubmittingTweet = false;
+      //submissionIndicator.SetActive(false);
+      BranchManager.instance.ToggleShareUI(false);
     }
     else
     {
-      Logger.Log("FAILED", response);
+      Logger.Log("FAILED", response);      
+      this.onErrorEvent.Invoke(response);
+      //submissionIndicator.SetActive(false);
+      isSubmittingTweet = false;
     }
   }
 

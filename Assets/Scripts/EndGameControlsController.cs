@@ -27,4 +27,19 @@ public class EndGameControlsController : MonoBehaviour {
 		animator.Play("end-game-controls-leave");
 		areControlsShowing = false;
 	}
+
+	public void ShowControls() {
+		animator.Play("end-game-controls-enter");
+		areControlsShowing = true;
+	}
+
+	public void ToggleControls(bool shouldShow){
+		Logger.Log(" SUPP????", shouldShow);
+		if(shouldShow) {
+			this.ShowControls();
+		}else{
+			this.HideControls();
+		}
+
+	}
 }

@@ -16,6 +16,9 @@ public class BranchManager : MonoBehaviour
   private List<BranchComponent> _branches = new List<BranchComponent>();
 	private bool _hasGameEnded = false;
 
+	private GameObject _uiRoot;	
+	private GameObject _uiSocial;
+
 	//private GameObject runningFinalBG;
 
   // Use this for initialization
@@ -28,6 +31,9 @@ public class BranchManager : MonoBehaviour
 			if(treePrefab != null){
 				Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
 			}
+
+			_uiRoot = GameObject.Find("GameUI");
+			_uiSocial = GameObject.Find("TwitterShareUI");
 
 			// LineSegment AB = new LineSegment(-1, -1, 1, 1);
 			// LineSegment CD = new LineSegment(-1, 1, 1, -1);
@@ -110,6 +116,18 @@ public class BranchManager : MonoBehaviour
 
 	public void ResetScene(){
 		_isMarkedForReset = true;
+	}
+
+	/**
+	 * UI Management
+	 **/
+	public void ToggleUIEnabled(bool shouldShow){
+		_uiRoot.GetComponent<Canvas>().enabled = shouldShow;
+	}
+
+	public void ToggleShareUI(bool shouldShow){
+		string animationName = shouldShow ? "twitter-ui-enter" : "twitter-ui-leave";
+		_uiSocial.GetComponent<Animator>().Play(animationName);
 	}
 
 	private bool _isTreeStillGrowing(){
