@@ -41,19 +41,23 @@ public class ScreenshotCapturer : MonoBehaviour
 
     float startTime = Time.time;
     while(!System.IO.File.Exists(screenshotPath)) {
-        // tried too long to save the file ?
+        // Don't wait anymore than 5 seconds for the file to write
         if(Time.time - startTime > 5.0f) {
+            // Handle some state here that will
+            //  let you recover if the image isn't available
             yield break;
         }
         yield return null;
     }
+
+    // Wait one more frame just to be sure the file is finished writing.
     yield return new WaitForEndOfFrame();
+
     FileImageComponent fileImage = twitterUI.GetComponentInChildren<FileImageComponent>();
     
     fileImage.ApplyImage(screenshotPath);
 
     BranchManager.instance.ToggleShareUI(true);
-    //twitterAnimator.Play("twitter-ui-enter");
 
     // Show UI after we're done
     BranchManager.instance.ToggleUIEnabled(true);
