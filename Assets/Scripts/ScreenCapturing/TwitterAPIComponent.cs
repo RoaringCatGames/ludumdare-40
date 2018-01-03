@@ -146,7 +146,8 @@ public class TwitterAPIComponent : MonoBehaviour
     Logger.Log("Found String is: ", accessDetails);
 
     accessToken = TwitterAccessToken.FromString(accessDetails);
-    if(string.IsNullOrEmpty(accessToken.Token) ||
+    if(accessToken == null ||
+       string.IsNullOrEmpty(accessToken.Token) ||
        string.IsNullOrEmpty(accessToken.TokenSecret) ||
        string.IsNullOrEmpty(accessToken.UserId) ||
        string.IsNullOrEmpty(accessToken.ScreenName)){
