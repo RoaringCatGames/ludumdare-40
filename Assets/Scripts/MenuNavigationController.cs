@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class MenuNavigationController : MonoBehaviour {
 
 	public string sceneName = "MenuScreen";
-
 	
 	public void TransitionToScene(){
 		SceneManager.LoadScene(sceneName);
