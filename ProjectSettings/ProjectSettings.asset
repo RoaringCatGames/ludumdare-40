@@ -158,7 +158,7 @@ PlayerSettings:
     Standalone: com.roaringcatgames.calligratree
     iOS: com.roaringcatgames.calligratree
   buildNumber: {}
-  AndroidBundleVersionCode: 2
+  AndroidBundleVersionCode: 3
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
