@@ -34,8 +34,7 @@ public class FileImageComponent : MonoBehaviour {
     }
     rect.sizeDelta = new Vector2(newWidth, newHeight);
 
-    Sprite screenshotSprite = new Sprite();
-    screenshotSprite = Sprite.Create(t2d, new Rect(0, 0, t2d.width, t2d.height), new Vector2(0, 0), 100f);
+    Sprite screenshotSprite = Sprite.Create(t2d, new Rect(0, 0, t2d.width, t2d.height), new Vector2(0, 0), 100f);
 
     imageComponent.sprite = screenshotSprite;
   }
