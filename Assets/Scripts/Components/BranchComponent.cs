@@ -181,6 +181,7 @@ public class BranchComponent : MonoBehaviour
     if((isAutomated && !isGrowing && !_hasSpawnedFoliage) ||
        (!isGrowing && !_hasSpawnedFoliage && BranchManager.instance != null && BranchManager.instance.IsGameOver()))
     {
+      Logger.Log("Spawning Foliage!!");
       _spawnFoliage();
     }
   }
@@ -312,11 +313,12 @@ public class BranchComponent : MonoBehaviour
 
     List<Vector3> points = new List<Vector3>();
     points.Add(ls.StartPoint);
-    while (dir.magnitude <= stepMagnitude)
-    {
-      points.Add(ls.StartPoint + dir);
-      dir += stepVector;
-    }
+	if (length != 0f) {
+		while (dir.magnitude <= stepMagnitude) {
+			points.Add (ls.StartPoint + dir);
+			dir += stepVector;
+		}
+	}
 
     foreach (Vector3 point in points)
     {

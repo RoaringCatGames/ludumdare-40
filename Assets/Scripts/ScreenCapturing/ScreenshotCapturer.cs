@@ -53,6 +53,11 @@ public class ScreenshotCapturer : MonoBehaviour
     // Wait one more frame just to be sure the file is finished writing.
     yield return new WaitForEndOfFrame();
 
+    #if UNITY_IOS || UNITY_ANDROID
+    // Save to Gallery!
+    NativeGallery.SaveToGallery(screenshotPath, "CalligraTrees", "gallery-" + screenshotPath, true);
+    #endif
+
     FileImageComponent fileImage = twitterUI.GetComponentInChildren<FileImageComponent>();
     
     fileImage.ApplyImage(screenshotPath);

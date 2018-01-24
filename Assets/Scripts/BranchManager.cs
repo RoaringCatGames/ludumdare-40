@@ -18,6 +18,7 @@ public class BranchManager : MonoBehaviour
 
 	private GameObject _uiRoot;	
 	private GameObject _uiSocial;
+	private GameObject _currentTree;
 
 	//private GameObject runningFinalBG;
 
@@ -29,7 +30,7 @@ public class BranchManager : MonoBehaviour
       instance = this;
 
 			if(treePrefab != null){
-				Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
+				_currentTree = Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
 			}
 
 			_uiRoot = GameObject.Find("GameUI");
@@ -55,15 +56,19 @@ public class BranchManager : MonoBehaviour
   }
 
 	void Update(){
+		Logger.Log("Branches Count: ", _branches.Count());
 		if(_isMarkedForReset){
 			_isMarkedForReset = false;
 			// Delete All Branches
 			_branches.ForEach((branch) => {
 				Destroy(branch.gameObject);
 			});
-			_branches.Clear();			
+			_branches.Clear();	
+			_branches = new List<BranchComponent>();
+			Destroy(_currentTree);
+
 			// Start a new Root Tree
-			Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
+			_currentTree = Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
 
 			// if(runningFinalBG != null){
 			// 	Destroy(runningFinalBG);
@@ -166,6 +171,10 @@ public class BranchManager : MonoBehaviour
 							zoomer.pauseTime = 0.5f;
 							
               shouldEndGame = true;
+
+							// make sure branches aren't growing??
+							branch.isGrowing = false;
+							other.isGrowing = false;
 							break;
             }
           }
