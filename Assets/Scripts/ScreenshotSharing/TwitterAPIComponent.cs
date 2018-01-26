@@ -135,7 +135,8 @@ public class TwitterAPIComponent : MonoBehaviour
   private void SubmitTweetWithImage()
   {
     Logger.Log("Sending Tweet with image ", fileImageComponent.filePath);
-    byte[] imgBinary = File.ReadAllBytes(fileImageComponent.filePath);
+    Texture2D t2d = fileImageComponent.GetTexture();
+    byte[] imgBinary = t2d.EncodeToPNG(); // File.ReadAllBytes(fileImageComponent.filePath);
     string imgbase64 = System.Convert.ToBase64String(imgBinary);
     StartCoroutine(twitterClient.PostTweetWithMedia(
       tweetText.text,

@@ -17,9 +17,11 @@ public class FileImageComponent : MonoBehaviour {
     }
   }
 
-  public void ApplyImage(string _filePath){
-    this.filePath = _filePath;
-    Texture2D t2d = CachedResource.LoadFile(filePath);
+  public Texture2D GetTexture() {
+    return imageComponent.sprite.texture;
+  }
+
+  public void ApplyImage(Texture2D t2d) {
     RectTransform rect = imageComponent.transform as RectTransform;
     // Retain Ratio    
     float aspectRatio = (float)t2d.width/(float)t2d.height;   
@@ -37,5 +39,12 @@ public class FileImageComponent : MonoBehaviour {
     Sprite screenshotSprite = Sprite.Create(t2d, new Rect(0, 0, t2d.width, t2d.height), new Vector2(0, 0), 100f);
 
     imageComponent.sprite = screenshotSprite;
+  }
+
+  public void ApplyImage(string _filePath){
+    this.filePath = _filePath;
+    Texture2D t2d = CachedResource.LoadFile(filePath);
+    
+    this.ApplyImage(t2d);
   }
 }

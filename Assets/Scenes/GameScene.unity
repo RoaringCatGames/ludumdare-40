@@ -877,6 +877,8 @@ GameObject:
   - component: {fileID: 743942174}
   - component: {fileID: 743942173}
   - component: {fileID: 743942172}
+  - component: {fileID: 743942177}
+  - component: {fileID: 743942176}
   m_Layer: 5
   m_Name: ShareButton
   m_TagString: Untagged
@@ -963,8 +965,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 743942172}
-        m_MethodName: ShareImage
+      - m_Target: {fileID: 743942177}
+        m_MethodName: CaptureScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -972,6 +974,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 881021842}
+        m_MethodName: PlaySfxByName
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: camera-single
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1009,6 +1022,50 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 743942170}
+--- !u!114 &743942176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 743942170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2587011249843249382d54223a9bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  twitterUI: {fileID: 1610710577}
+--- !u!114 &743942177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 743942170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4d6805199744fd096f67a861595cfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onScreenCaptureComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 743942176}
+        m_MethodName: StartTwitterSharingProcess
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ScreenCaptureComplete, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onScreenCaptureSaved:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ScreenCaptureSaved, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &881021842 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
@@ -1876,6 +1933,7 @@ GameObject:
   - component: {fileID: 1611732431}
   - component: {fileID: 1611732430}
   - component: {fileID: 1611732429}
+  - component: {fileID: 1611732432}
   - component: {fileID: 1611732428}
   m_Layer: 5
   m_Name: ScreenCapButton
@@ -1911,10 +1969,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1611732426}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf149928a11604f63be23b487b0cf346, type: 3}
+  m_Script: {fileID: 11500000, guid: ee4d6805199744fd096f67a861595cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  twitterUI: {fileID: 1610710577}
+  onScreenCaptureComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1611732432}
+        m_MethodName: SaveToGallery
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ScreenCaptureComplete, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onScreenCaptureSaved:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ScreenCaptureSaved, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &1611732429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1955,7 +2033,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1611732428}
-        m_MethodName: OnClickScreenCaptureButton
+        m_MethodName: CaptureScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2011,6 +2089,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1611732426}
+--- !u!114 &1611732432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1611732426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2587011249843249382d54223a9bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  twitterUI: {fileID: 0}
 --- !u!1 &1629195465
 GameObject:
   m_ObjectHideFlags: 0
