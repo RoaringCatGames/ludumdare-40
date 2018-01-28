@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using LitterBox.Utils;
 
 namespace Twitter
 {
@@ -84,7 +85,7 @@ namespace Twitter
       WWWForm form = new WWWForm();
       form.AddField("status", message);
 
-      Logger.Log("Status Message", message, mediaIds);
+      Kitten.Meow("Status Message", message, mediaIds);
 
       if(mediaIds != null){
         parameters.Add("media_ids", mediaIds);
@@ -110,7 +111,7 @@ namespace Twitter
 
       UnityWebRequest req = UnityWebRequest.Post(UPLOAD_MEDIA_URL, form);
       var authHeader = _generateRequestTokenAuthHeader("POST", UPLOAD_MEDIA_URL, sortedParams);
-      Logger.Log("Auth Header for Media: ", authHeader);
+      Kitten.Meow("Auth Header for Media: ", authHeader);
       req.SetRequestHeader("Authorization", authHeader);   
       //req.SetRequestHeader("Content-Type", "multipart/form-data");   
 
@@ -119,7 +120,7 @@ namespace Twitter
       if(req.isNetworkError){
         callback(false, JsonResponseUtil.ArrayToObject(req.error));
       }else {
-        Logger.Log("Media Upload Response JSON: ", req.downloadHandler.text);
+        Kitten.Meow("Media Upload Response JSON: ", req.downloadHandler.text);
         var mediaUpload = JsonUtility.FromJson<Twitter.TwitterMediaUploadResponse>(req.downloadHandler.text);
         yield return PostTweet(message, mediaUpload.media_id.ToString(), accessToken, accessTokenSecret, callback);
       }      

@@ -6,6 +6,7 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using LitterBox.Utils;
 using Twitter;
 
 [Serializable]
@@ -88,11 +89,11 @@ public class TwitterAPIComponent : MonoBehaviour
 
   private void ProcessRequestTokenResponse(bool success, string responseJson)
   {
-    Logger.Log("Custom Request Token Response", responseJson);
+    Kitten.Meow("Custom Request Token Response", responseJson);
     if (success)
     {
       requestToken = JsonUtility.FromJson<Twitter.TwitterRequestToken>(responseJson);
-      Logger.Log(requestToken.oauth_token, requestToken.oauth_token_secret, requestToken.oauth_callback_confirmed);
+      Kitten.Meow(requestToken.oauth_token, requestToken.oauth_token_secret, requestToken.oauth_callback_confirmed);
       Application.OpenURL(twitterClient.GetAppAuthorizationUrl(requestToken.oauth_token));
 
       /// TODO: Prompt For PIN
@@ -101,7 +102,7 @@ public class TwitterAPIComponent : MonoBehaviour
     }
     else
     {
-      Logger.Log("Error while getting RequestToken");
+      Kitten.Meow("Error while getting RequestToken");
       onErrorEvent.Invoke("Could not Generate Request Token");
     }
   }
@@ -109,7 +110,7 @@ public class TwitterAPIComponent : MonoBehaviour
   {
     if (success)
     {
-      Logger.Log("Access Token Response: ", response);
+      Kitten.Meow("Access Token Response: ", response);
       var token = JsonUtility.FromJson<TwitterRawAccessToken>(response);
       accessToken = new TwitterAccessToken(
         token.oauth_token,
@@ -117,14 +118,14 @@ public class TwitterAPIComponent : MonoBehaviour
         token.user_id,
         token.screen_name
       );
-      Logger.Log("Token", accessToken);
+      Kitten.Meow("Token", accessToken);
 
       StoreAccessToken(accessToken);
       SubmitTweetWithImage();      
     }
     else
     {
-      Logger.Log("FAILED", response);
+      Kitten.Meow("FAILED", response);
       isSubmittingTweet = false;
       //submissionIndicator.SetActive(false);
       onErrorEvent.Invoke(response);
@@ -134,7 +135,7 @@ public class TwitterAPIComponent : MonoBehaviour
 
   private void SubmitTweetWithImage()
   {
-    Logger.Log("Sending Tweet with image ", fileImageComponent.filePath);
+    Kitten.Meow("Sending Tweet with image ", fileImageComponent.filePath);
     Texture2D t2d = fileImageComponent.GetTexture();
     byte[] imgBinary = t2d.EncodeToPNG(); // File.ReadAllBytes(fileImageComponent.filePath);
     string imgbase64 = System.Convert.ToBase64String(imgBinary);
@@ -150,14 +151,14 @@ public class TwitterAPIComponent : MonoBehaviour
   {
     if (success)
     {
-      Logger.Log("SUCCESS", response);
+      Kitten.Meow("SUCCESS", response);
       isSubmittingTweet = false;
       //submissionIndicator.SetActive(false);
       BranchManager.instance.ToggleShareUI(false);
     }
     else
     {
-      Logger.Log("FAILED", response);      
+      Kitten.Meow("FAILED", response);      
       this.onErrorEvent.Invoke(response);
       //submissionIndicator.SetActive(false);
       isSubmittingTweet = false;
@@ -172,7 +173,7 @@ public class TwitterAPIComponent : MonoBehaviour
   private void LoadStoredAccessToken()
   {
     string accessDetails = PlayerPrefs.GetString(PREFS_TWITTER_ACCESS_KEY);
-    Logger.Log("Found String is: ", accessDetails);
+    Kitten.Meow("Found String is: ", accessDetails);
 
     accessToken = TwitterAccessToken.FromString(accessDetails);
     if(accessToken == null ||
@@ -180,7 +181,7 @@ public class TwitterAPIComponent : MonoBehaviour
        string.IsNullOrEmpty(accessToken.TokenSecret) ||
        string.IsNullOrEmpty(accessToken.UserId) ||
        string.IsNullOrEmpty(accessToken.ScreenName)){
-         Logger.Log("Stored Access Token has Empty Values. Discarding");
+         Kitten.Meow("Stored Access Token has Empty Values. Discarding");
          accessToken = null;
        }
   }

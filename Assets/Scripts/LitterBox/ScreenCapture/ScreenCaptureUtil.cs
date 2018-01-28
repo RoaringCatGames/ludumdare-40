@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LitterBox.Utils {
+namespace LitterBox.ScreenCapture {
 
   public delegate void ScreenCaptureResultHandler(IScreenCaptureResult result);
   public class ScreenCaptureUtil {

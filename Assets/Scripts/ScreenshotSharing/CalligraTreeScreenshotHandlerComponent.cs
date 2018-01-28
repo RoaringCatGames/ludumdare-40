@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using LitterBox.Utils;
 
 public class CalligraTreeScreenshotHandlerComponent: MonoBehaviour {
 
@@ -13,13 +14,13 @@ public class CalligraTreeScreenshotHandlerComponent: MonoBehaviour {
 
     BranchManager.instance.ToggleShareUI(true);
 
-    Logger.Log("Start Twitter Sharing Process FIRED!");
+    Kitten.Meow("Start Twitter Sharing Process FIRED!");
   }
   public void SaveToGallery(Texture2D screenshot) {
     #if UNITY_IOS || UNITY_ANDROID
     // Save to Gallery!
     NativeGallery.SaveToGallery(screenshot, "CalligraTrees", "calligratree-{0}.png");
     #endif
-    Logger.Log("SAVE TO GALLERY FIRED!");
+    Kitten.Meow("SAVE TO GALLERY FIRED!");
   }
 }

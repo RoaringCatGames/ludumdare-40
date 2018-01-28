@@ -36,6 +36,9 @@ sysinfo.txt
 # Mac OSX
 .DS_Store
 
+# VS Code Stuff
+.vscode
+
 # Calligratree Stuff
 calligratree-*.png
 Assets/Resources/Data/twitter.secret.txt*

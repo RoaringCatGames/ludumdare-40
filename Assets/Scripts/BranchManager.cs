@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using LitterBox.Models;
+using LitterBox.Utils;
 
 public class BranchManager : MonoBehaviour
 {
@@ -46,7 +48,7 @@ public class BranchManager : MonoBehaviour
 
 			// bool secondDoCross = LineUtils.CrossProductIntersectTest(EF, GH);
 
-			// Logger.Log("AB->CD Cross: ", doCross, " EF->GH Cross: ", secondDoCross);
+			// Kitten.Meow("AB->CD Cross: ", doCross, " EF->GH Cross: ", secondDoCross);
     }
     else if (this != instance)
     {
@@ -56,7 +58,7 @@ public class BranchManager : MonoBehaviour
   }
 
 	void Update(){
-		Logger.Log("Branches Count: ", _branches.Count());
+		Kitten.Meow("Branches Count: ", _branches.Count());
 		if(_isMarkedForReset){
 			_isMarkedForReset = false;
 			// Delete All Branches

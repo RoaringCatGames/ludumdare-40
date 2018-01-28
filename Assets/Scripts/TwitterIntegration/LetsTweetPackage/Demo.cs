@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.IO;
+using LitterBox.Utils;
 
 public class Demo : MonoBehaviour
 {
@@ -216,16 +217,16 @@ public class Demo : MonoBehaviour
 
   void OnRequestTokenCallbackNew(bool success, string responseJson)
   {
-    Logger.Log("Custom Request Token Response", responseJson);
+    Kitten.Meow("Custom Request Token Response", responseJson);
     if (success)
     {
       twitterRequestToken = JsonUtility.FromJson<Twitter.TwitterRequestToken>(responseJson);
-      Logger.Log(twitterRequestToken.oauth_token, twitterRequestToken.oauth_token_secret, twitterRequestToken.oauth_callback_confirmed);
+      Kitten.Meow(twitterRequestToken.oauth_token, twitterRequestToken.oauth_token_secret, twitterRequestToken.oauth_callback_confirmed);
       Application.OpenURL(twitterClient.GetAppAuthorizationUrl(twitterRequestToken.oauth_token));
     }
     else
     {
-      Logger.Log("Error while getting RequestToken");
+      Kitten.Meow("Error while getting RequestToken");
     }
   }
 
@@ -234,7 +235,7 @@ public class Demo : MonoBehaviour
     if (success)
     {
       var rawResponse = JsonUtility.FromJson<Twitter.TwitterRawAccessToken>(responseJson);
-      Logger.Log("Response JSON for Access Token: ", responseJson);
+      Kitten.Meow("Response JSON for Access Token: ", responseJson);
       twitterAccessToken = new Twitter.TwitterAccessToken(
           rawResponse.oauth_token,
           rawResponse.oauth_token_secret,
@@ -244,7 +245,7 @@ public class Demo : MonoBehaviour
     }
     else
     {
-      Logger.Log("Error On AccessToken Callback", responseJson);
+      Kitten.Meow("Error On AccessToken Callback", responseJson);
     }
   }
   // void OnAccessTokenCallback(bool success, Twitter.AccessTokenResponse response)
@@ -275,11 +276,11 @@ public class Demo : MonoBehaviour
   {
     if (success)
     {
-      Logger.Log("SUCCESS", response);
+      Kitten.Meow("SUCCESS", response);
     }
     else
     {
-      Logger.Log("FAILED", response);
+      Kitten.Meow("FAILED", response);
     }
   }
   void OnPostTweet(bool success)

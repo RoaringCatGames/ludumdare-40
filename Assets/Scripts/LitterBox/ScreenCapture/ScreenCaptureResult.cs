@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace LitterBox.Utils {
+namespace LitterBox.ScreenCapture {
 
   public class ScreenCaptureResult: IScreenCaptureResult {
     public ScreenCaptureResult() {}

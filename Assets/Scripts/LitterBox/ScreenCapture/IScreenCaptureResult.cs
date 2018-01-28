@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace LitterBox.Utils {
+namespace LitterBox.ScreenCapture {
 
   public interface IScreenCaptureResult {
     Texture2D ScreenTexture { get; }

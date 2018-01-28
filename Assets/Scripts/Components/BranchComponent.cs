@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using LitterBox.Models;
+using LitterBox.Utils;
 
 public class BranchComponent : MonoBehaviour
 {
@@ -181,7 +183,7 @@ public class BranchComponent : MonoBehaviour
     if((isAutomated && !isGrowing && !_hasSpawnedFoliage) ||
        (!isGrowing && !_hasSpawnedFoliage && BranchManager.instance != null && BranchManager.instance.IsGameOver()))
     {
-      Logger.Log("Spawning Foliage!!");
+      Kitten.Meow("Spawning Foliage!!");
       _spawnFoliage();
     }
   }

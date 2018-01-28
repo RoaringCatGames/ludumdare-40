@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LitterBox.Utils;
 
 public class EndGameControlsController : MonoBehaviour {
 
@@ -17,7 +18,7 @@ public class EndGameControlsController : MonoBehaviour {
 	//	controlsShowing flag from getting reset
 	void LateUpdate () {
 		if(BranchManager.instance.IsGameOver() && !areControlsShowing){
-			Logger.Log("GAME ENDED");
+			Kitten.Meow("GAME ENDED");
 			areControlsShowing = true;
 			animator.Play("end-game-controls-enter");
 		}
@@ -34,7 +35,7 @@ public class EndGameControlsController : MonoBehaviour {
 	}
 
 	public void ToggleControls(bool shouldShow){
-		Logger.Log(" SUPP????", shouldShow);
+		Kitten.Meow(" SUPP????", shouldShow);
 		if(shouldShow) {
 			this.ShowControls();
 		}else{
