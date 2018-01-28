@@ -879,6 +879,7 @@ GameObject:
   - component: {fileID: 743942172}
   - component: {fileID: 743942177}
   - component: {fileID: 743942176}
+  - component: {fileID: 743942178}
   m_Layer: 5
   m_Name: ShareButton
   m_TagString: Untagged
@@ -1045,6 +1046,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4d6805199744fd096f67a861595cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hideUIOnScreenCapture: 1
+  relativeFileSavePath: 
+  savedFileNameFormatted: 
   onScreenCaptureComplete:
     m_PersistentCalls:
       m_Calls:
@@ -1059,13 +1063,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: ScreenCaptureComplete, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: LitterBox.ScreenCapture.ScreenCaptureComplete, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onScreenCaptureSaved:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: ScreenCaptureSaved, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: LitterBox.ScreenCapture.ScreenCaptureSaved, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &743942178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 743942170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce0e20739a0944bc09c6b8a5b1fcb906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformsToHide: 110000000300000005000000
 --- !u!114 &881021842 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
@@ -1972,6 +1988,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4d6805199744fd096f67a861595cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hideUIOnScreenCapture: 1
+  relativeFileSavePath: 
+  savedFileNameFormatted: 
   onScreenCaptureComplete:
     m_PersistentCalls:
       m_Calls:
@@ -1986,13 +2005,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: ScreenCaptureComplete, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: LitterBox.ScreenCapture.ScreenCaptureComplete, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onScreenCaptureSaved:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: ScreenCaptureSaved, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: LitterBox.ScreenCapture.ScreenCaptureSaved, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1611732429
 MonoBehaviour:
   m_ObjectHideFlags: 0
