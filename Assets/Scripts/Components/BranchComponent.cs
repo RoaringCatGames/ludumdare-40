@@ -59,7 +59,10 @@ public class BranchComponent : MonoBehaviour
 
   private Dictionary<string, string[]> _flowerAnimationMap = new Dictionary<string, string[]>() {
     { "sakura", new string[] { "Bloom 1", "Bloom 2", "Bloom 3" } },
-    { "apricot", new string[] { "MaiStem1", "MaiStem1a", "MaiStem1b", "MaiStem2", "MaiStem2a", "MaiStem3", "MaiBloom1", "MaiBloom2", "MaiBloom3", "MaiBloom4" } }
+    { "apricot", new string[] { 
+      "MaiStem1", "MaiStem1 0", "MaiStem1 1", "MaiStem1a", "MaiStem1a 0", "MaiStem1a 1", 
+      "MaiStem1b", "MaiStem1b 0", "MaiStem1b 1", "MaiStem2", "MaiStem2a", "MaiStem3", 
+      "MaiBloom1", "MaiBloom2", "MaiBloom3", "MaiBloom4" } }
   };
 
   private LineSegment _lastSegment;
