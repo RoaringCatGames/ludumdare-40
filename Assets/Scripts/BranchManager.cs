@@ -31,13 +31,8 @@ public class BranchManager : MonoBehaviour
   {
     if (instance == null)
     {
-      instance = this;
-
-			if(treePrefab != null){
-				KeyedGameObject keyedPrefab = treePrefabs.FirstOrDefault((t) => t.Key == treeKey);
-				_currentTree = Instantiate(keyedPrefab.Entry, new Vector3(0f, -2f, 0f), Quaternion.identity);
-			}
-
+      instance = this;			
+			
 			_uiRoot = GameObject.Find("GameUI");
 			_uiSocial = GameObject.Find("TwitterShareUI");		
     }
@@ -45,6 +40,8 @@ public class BranchManager : MonoBehaviour
     {
       Destroy(gameObject);
     }
+		
+		DontDestroyOnLoad(gameObject);
   }
 
 	void Update(){
@@ -100,6 +97,16 @@ public class BranchManager : MonoBehaviour
 		}
   }
 
+	public void PlantTree(string key = null) {
+		if(treePrefabs != null && treePrefabs.Length > 0){
+			if(key != null) {
+				treeKey = key;
+			}
+
+			KeyedGameObject keyedPrefab = treePrefabs.FirstOrDefault((t) => t.Key == treeKey);
+			_currentTree = Instantiate(keyedPrefab.Entry, new Vector3(0f, -2f, 0f), Quaternion.identity);
+		}
+	}
   public void AddBranch(BranchComponent branch)
   {
     _branches.Add(branch);

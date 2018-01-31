@@ -256,8 +256,8 @@ public class BranchComponent : MonoBehaviour
   }
 
   private void _spawnFoliage()
-  {
-    float baseFlowerDensity = 6f;
+  {      
+    float baseFlowerDensity = BranchManager.instance.treeKey == "apricot" ? 3f : 6f;
     LineSegment end = null, before = null;
     end = _lastSegment;
     if(end == null){
@@ -343,6 +343,7 @@ public class BranchComponent : MonoBehaviour
         DelayedAnimationComponent delay = leaf.AddComponent<DelayedAnimationComponent>();
         delay.delaySeconds = Random.Range(0f, 0.75f);// IGNORE BASE DELAY FOR NOW + baseDelay;
         delay.animationName = animationNames[Random.Range(0, animationNames.Length)];
+        Kitten.Meow("Animation Name: ", delay.animationName);
         added++;
       }
     }
