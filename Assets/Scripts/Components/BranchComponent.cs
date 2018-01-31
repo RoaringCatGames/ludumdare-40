@@ -41,6 +41,8 @@ public class BranchComponent : MonoBehaviour
   public bool isGrowing = true;
   [HideInInspector]
   public BranchComponent parentBranch;
+  [HideInInspector]
+  public string treeKey = "sakura";
 
   private LineRenderer _lineRenderer;
   private float _elapsedTime = 0f;
@@ -55,10 +57,9 @@ public class BranchComponent : MonoBehaviour
     "leaf-5"
   };
 
-  private string[] _flowerAniNames = new string[] {
-    "Bloom 1",
-    "Bloom 2",
-    "Bloom 3"
+  private Dictionary<string, string[]> _flowerAnimationMap = new Dictionary<string, string[]>() {
+    { "sakura", new string[] { "Bloom 1", "Bloom 2", "Bloom 3" } },
+    { "apricot", new string[] { "MaiStem1", "MaiStem1a", "MaiStem1b", "MaiStem2", "MaiStem2a", "MaiStem3", "MaiBloom1", "MaiBloom2", "MaiBloom3", "MaiBloom4" } }
   };
 
   private LineSegment _lastSegment;
@@ -94,6 +95,7 @@ public class BranchComponent : MonoBehaviour
     _lineRenderer.positionCount = positions.Length;
     _lineRenderer.SetPositions(positions);
 
+    
     if(!isAutomated){
       // Add Ourselves to the Branch Manager
       BranchManager.instance.AddBranch(this);
@@ -183,7 +185,6 @@ public class BranchComponent : MonoBehaviour
     if((isAutomated && !isGrowing && !_hasSpawnedFoliage) ||
        (!isGrowing && !_hasSpawnedFoliage && BranchManager.instance != null && BranchManager.instance.IsGameOver()))
     {
-      Kitten.Meow("Spawning Foliage!!");
       _spawnFoliage();
     }
   }
@@ -297,7 +298,8 @@ public class BranchComponent : MonoBehaviour
 
   private void _spawnFlowersOverSegment(LineSegment ls, float density, float baseDelay)
   {
-    _spawnPrefabOverSegment(animatedFlowerPrefab, _flowerAniNames, ls, density, 1.75f, baseDelay);
+    string key = BranchManager.instance != null ? BranchManager.instance.treeKey : "sakura";
+    _spawnPrefabOverSegment(animatedFlowerPrefab, this._flowerAnimationMap[key], ls, density, 1.75f, baseDelay);
   }
   private void _spawnLeavesOverSegment(LineSegment ls, float density, float baseDelay)
   {

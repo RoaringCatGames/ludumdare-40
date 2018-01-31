@@ -540,6 +540,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114968263545936254, guid: db09bbbd7b723473ba2a30d56770167a,
+        type: 2}
+      propertyPath: isZenMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: db09bbbd7b723473ba2a30d56770167a, type: 2}
   m_IsPrefabParent: 0

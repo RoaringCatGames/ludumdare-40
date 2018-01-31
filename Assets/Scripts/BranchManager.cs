@@ -10,9 +10,12 @@ public class BranchManager : MonoBehaviour
 
   public static BranchManager instance;
 	public GameObject finalAnimation;
-	public GameObject treePrefab;
 
+	public KeyedGameObject[] treePrefabs;
+	public GameObject treePrefab;
 	public bool isZenMode = false;
+	public string treeKey = "apricot";
+
 
 	private bool _isMarkedForReset = false;
   private List<BranchComponent> _branches = new List<BranchComponent>();
@@ -22,7 +25,6 @@ public class BranchManager : MonoBehaviour
 	private GameObject _uiSocial;
 	private GameObject _currentTree;
 
-	//private GameObject runningFinalBG;
 
   // Use this for initialization
   void Awake()
@@ -32,29 +34,17 @@ public class BranchManager : MonoBehaviour
       instance = this;
 
 			if(treePrefab != null){
-				_currentTree = Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
+				KeyedGameObject keyedPrefab = treePrefabs.FirstOrDefault((t) => t.Key == treeKey);
+				_currentTree = Instantiate(keyedPrefab.Entry, new Vector3(0f, -2f, 0f), Quaternion.identity);
 			}
 
 			_uiRoot = GameObject.Find("GameUI");
-			_uiSocial = GameObject.Find("TwitterShareUI");
-
-			// LineSegment AB = new LineSegment(-1, -1, 1, 1);
-			// LineSegment CD = new LineSegment(-1, 1, 1, -1);
-
-			// bool doCross = LineUtils.CrossProductIntersectTest(AB, CD);
-
-			// LineSegment EF = new LineSegment(-1, -1, -1, 1);
-			// LineSegment GH = new LineSegment(1, 1, 1, -1);
-
-			// bool secondDoCross = LineUtils.CrossProductIntersectTest(EF, GH);
-
-			// Kitten.Meow("AB->CD Cross: ", doCross, " EF->GH Cross: ", secondDoCross);
+			_uiSocial = GameObject.Find("TwitterShareUI");		
     }
     else if (this != instance)
     {
       Destroy(gameObject);
     }
-    //DontDestroyOnLoad(gameObject);
   }
 
 	void Update(){
@@ -70,11 +60,9 @@ public class BranchManager : MonoBehaviour
 			Destroy(_currentTree);
 
 			// Start a new Root Tree
-			_currentTree = Instantiate(treePrefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
+			KeyedGameObject keyedPrefab = treePrefabs.FirstOrDefault((t) => t.Key == treeKey);
+			_currentTree = Instantiate(keyedPrefab.Entry, new Vector3(0f, -2f, 0f), Quaternion.identity);
 
-			// if(runningFinalBG != null){
-			// 	Destroy(runningFinalBG);
-			// }
 			//Set our flag to play again
 			_hasGameEnded = false;
 		}
@@ -92,6 +80,8 @@ public class BranchManager : MonoBehaviour
 					// Trigger Final Flowering
 					// Stop All Branches from Growing further
 					_branches.ForEach((b) => b.isGrowing = false);
+
+					// Clear all branch Selection
 					foreach(var spi in FindObjectsOfType(typeof(SelectionPointInteractions))){
 						if(spi is GameObject){
 							Destroy(spi);
@@ -106,7 +96,6 @@ public class BranchManager : MonoBehaviour
 				bool isStillGrowing = _isTreeStillGrowing();
 				if(!isStillGrowing){
 					_hasGameEnded = true;
-					//runningFinalBG = Instantiate(finalAnimation, new Vector3(), Quaternion.identity);
 				}
 			}
 		}
@@ -123,6 +112,10 @@ public class BranchManager : MonoBehaviour
 
 	public void ResetScene(){
 		_isMarkedForReset = true;
+	}
+
+	public void SetTreeChoice(string chosenTreeKey) {
+		this.treeKey = chosenTreeKey;
 	}
 
 	/**
