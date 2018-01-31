@@ -48,7 +48,6 @@ public class BranchManager : MonoBehaviour
   }
 
 	void Update(){
-		Kitten.Meow("Branches Count: ", _branches.Count());
 		if(_isMarkedForReset){
 			_isMarkedForReset = false;
 			// Delete All Branches

@@ -18,7 +18,6 @@ public class EndGameControlsController : MonoBehaviour {
 	//	controlsShowing flag from getting reset
 	void LateUpdate () {
 		if(BranchManager.instance.IsGameOver() && !areControlsShowing){
-			Kitten.Meow("GAME ENDED");
 			areControlsShowing = true;
 			animator.Play("end-game-controls-enter");
 		}
@@ -35,7 +34,6 @@ public class EndGameControlsController : MonoBehaviour {
 	}
 
 	public void ToggleControls(bool shouldShow){
-		Kitten.Meow(" SUPP????", shouldShow);
 		if(shouldShow) {
 			this.ShowControls();
 		}else{
