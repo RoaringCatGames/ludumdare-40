@@ -30,6 +30,9 @@ public class GameStateManager : MonoBehaviour {
   public TreeTypeKeyedGameObject[] treeMap;
   public GameObject defaultTreePrefab;
 
+  public TreeTypeKeyedColor[] colorMap;
+  public Color defaultColor;
+
 
   public GameObject GetTreePrefab() {
     return GetTreePrefab(TreeTypeKey);
@@ -41,5 +44,14 @@ public class GameStateManager : MonoBehaviour {
     } else {
       return defaultTreePrefab;
     }
+  }
+
+  public Color GetColor() {
+    return GetColor(TreeTypeKey);
+  }
+
+  public Color GetColor(TreeTypeKey key) {
+    TreeTypeKeyedColor color = colorMap.FirstOrDefault((c) => c.Key == key);
+    return color != null ? color.color : defaultColor;
   }
 }
