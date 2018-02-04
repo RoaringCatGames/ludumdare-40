@@ -60,3 +60,11 @@ MonoBehaviour:
     Entry: {fileID: 1022841844484048, guid: c5d6bdae8d92948f198d2719d98e5538, type: 2}
   defaultTreePrefab: {fileID: 1022841844484048, guid: 33252bcf9a53b409892628fa9fe63fd4,
     type: 2}
+  colorMap:
+  - Key: 0
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - Key: 1
+    color: {r: 0.41911763, g: 1, b: 0.855781, a: 0}
+  - Key: 2
+    color: {r: 1, g: 0.5661257, b: 0.49264705, a: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 0}
