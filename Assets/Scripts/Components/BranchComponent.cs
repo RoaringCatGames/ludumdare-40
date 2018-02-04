@@ -257,7 +257,7 @@ public class BranchComponent : MonoBehaviour
 
   private void _spawnFoliage()
   {      
-    float baseFlowerDensity = BranchManager.instance.treeKey == "apricot" ? 3f : 6f;
+    float baseFlowerDensity = BranchManager.instance.treeKey == "apricot" ? 6f : 6f;
     LineSegment end = null, before = null;
     end = _lastSegment;
     if(end == null){
