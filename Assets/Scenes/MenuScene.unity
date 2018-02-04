@@ -225,21 +225,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114194034821137410, guid: ab11d88cf2c24479c919981faa323c6c,
-        type: 2}
-      propertyPath: treeMap.Array.data[0].Key
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114194034821137410, guid: ab11d88cf2c24479c919981faa323c6c,
-        type: 2}
-      propertyPath: treeMap.Array.data[1].Key
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114194034821137410, guid: ab11d88cf2c24479c919981faa323c6c,
-        type: 2}
-      propertyPath: TreeTypeKey
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
   m_IsPrefabParent: 0
@@ -1156,6 +1141,30 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b5240204b2944e78973dd619b40c899, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1477477453 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1430816330772988, guid: ab11d88cf2c24479c919981faa323c6c,
+    type: 2}
+  m_PrefabInternal: {fileID: 81648178}
+--- !u!114 &1477477456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1477477453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f6d0ec6ad31475b90e8a5b93363565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorMap:
+  - Key: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - Key: 1
+    color: {r: 0.41911763, g: 1, b: 0.855781, a: 1}
+  - Key: 2
+    color: {r: 1, g: 0.5661257, b: 0.49264705, a: 1}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1664797961
 GameObject:
   m_ObjectHideFlags: 0
