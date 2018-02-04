@@ -200,7 +200,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &63077555
 GameObject:
@@ -538,7 +538,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4907176623975360, guid: db09bbbd7b723473ba2a30d56770167a, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114968263545936254, guid: db09bbbd7b723473ba2a30d56770167a,
         type: 2}
@@ -633,6 +633,48 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 168956698}
+--- !u!1001 &207633513
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4483879407464632, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -13.332319
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483879407464632, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 12.248477
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483879407464632, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483879407464632, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483879407464632, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483879407464632, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483879407464632, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483879407464632, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &493790369
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +763,7 @@ RectTransform:
   - {fileID: 1750770482}
   - {fileID: 1610710578}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -890,6 +932,7 @@ GameObject:
   - component: {fileID: 743942177}
   - component: {fileID: 743942176}
   - component: {fileID: 743942178}
+  - component: {fileID: 743942179}
   m_Layer: 5
   m_Name: ShareButton
   m_TagString: Untagged
@@ -987,8 +1030,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 881021842}
-        m_MethodName: PlaySfxByName
+      - m_Target: {fileID: 743942179}
+        m_MethodName: PlaySoundEffectByName
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1092,12 +1135,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformsToHide: 110000000300000005000000
---- !u!114 &881021842 stripped
+--- !u!114 &743942179
 MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
-    type: 2}
-  m_PrefabInternal: {fileID: 1135497757}
-  m_Script: {fileID: 11500000, guid: 8e82a3b7902dd4088a1c11378bbd28fa, type: 3}
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 743942170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c544de8f409547e1b785167aa8549d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &913062113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,8 +1157,9 @@ GameObject:
   - component: {fileID: 913062117}
   - component: {fileID: 913062116}
   - component: {fileID: 913062115}
+  - component: {fileID: 913062118}
   m_Layer: 5
-  m_Name: Button
+  m_Name: PlayAgainButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1173,8 +1222,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 150101163}
-        m_MethodName: ResetScene
+      - m_Target: {fileID: 913062118}
+        m_MethodName: ResetGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1230,6 +1279,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 913062113}
+--- !u!114 &913062118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 913062113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c544de8f409547e1b785167aa8549d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1012995079
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,7 +1406,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4793562002404406, guid: 8b5240204b2944e78973dd619b40c899, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114026980431496680, guid: 8b5240204b2944e78973dd619b40c899,
         type: 2}
@@ -1431,7 +1491,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1333756679
 GameObject:
@@ -1961,6 +2021,7 @@ GameObject:
   - component: {fileID: 1611732429}
   - component: {fileID: 1611732432}
   - component: {fileID: 1611732428}
+  - component: {fileID: 1611732433}
   m_Layer: 5
   m_Name: ScreenCapButton
   m_TagString: Untagged
@@ -1999,8 +2060,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideUIOnScreenCapture: 1
-  relativeFileSavePath: 
-  savedFileNameFormatted: 
+  relativeFileSavePath: /
+  savedFileNameFormatted: calligratree-{0}.png
   onScreenCaptureComplete:
     m_PersistentCalls:
       m_Calls:
@@ -2072,8 +2133,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 881021842}
-        m_MethodName: PlaySfxByName
+      - m_Target: {fileID: 1611732433}
+        m_MethodName: PlaySoundEffectByName
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2130,6 +2191,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   twitterUI: {fileID: 0}
+--- !u!114 &1611732433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1611732426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c544de8f409547e1b785167aa8549d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1629195465
 GameObject:
   m_ObjectHideFlags: 0
@@ -2217,7 +2289,7 @@ GameObject:
   - component: {fileID: 1653911142}
   - component: {fileID: 1653911141}
   m_Layer: 5
-  m_Name: Menu
+  m_Name: MenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

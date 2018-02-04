@@ -11,10 +11,9 @@ public class BranchManager : MonoBehaviour
   public static BranchManager instance;
 	public GameObject finalAnimation;
 
-	public KeyedGameObject[] treePrefabs;
+	public TreeTypeKeyedGameObject[] treePrefabs;
 	public GameObject treePrefab;
 	public bool isZenMode = false;
-	public string treeKey = "apricot";
 
 
 	private bool _isMarkedForReset = false;
@@ -35,28 +34,31 @@ public class BranchManager : MonoBehaviour
 			
 			_uiRoot = GameObject.Find("GameUI");
 			_uiSocial = GameObject.Find("TwitterShareUI");		
+			DontDestroyOnLoad(instance.gameObject);
     }
     else if (this != instance)
     {
       Destroy(gameObject);
     }
-		
-		DontDestroyOnLoad(gameObject);
   }
 
 	void Update(){
 		if(_isMarkedForReset){
+			Kitten.Meow("Game is Resetting");
 			_isMarkedForReset = false;
 			// Delete All Branches
-			_branches.ForEach((branch) => {
-				Destroy(branch.gameObject);
+			_branches.ForEach((branch) => {		
+				if(branch != null) {
+					Destroy(branch.gameObject);
+				}
 			});
 			_branches.Clear();	
 			_branches = new List<BranchComponent>();
 			Destroy(_currentTree);
 
+			Kitten.Meow("Branches Destroyed. Current Branches: ", _branches.Count());
 			// Start a new Root Tree
-			KeyedGameObject keyedPrefab = treePrefabs.FirstOrDefault((t) => t.Key == treeKey);
+			TreeTypeKeyedGameObject keyedPrefab = treePrefabs.FirstOrDefault((t) => t.Key == GameStateManager.instance.TreeTypeKey);
 			_currentTree = Instantiate(keyedPrefab.Entry, new Vector3(0f, -2f, 0f), Quaternion.identity);
 
 			//Set our flag to play again
@@ -97,13 +99,10 @@ public class BranchManager : MonoBehaviour
 		}
   }
 
-	public void PlantTree(string key = null) {
+	public void PlantTree() {
 		if(treePrefabs != null && treePrefabs.Length > 0){
-			if(key != null) {
-				treeKey = key;
-			}
 
-			KeyedGameObject keyedPrefab = treePrefabs.FirstOrDefault((t) => t.Key == treeKey);
+			TreeTypeKeyedGameObject keyedPrefab = treePrefabs.FirstOrDefault((t) => t.Key == GameStateManager.instance.TreeTypeKey);
 			_currentTree = Instantiate(keyedPrefab.Entry, new Vector3(0f, -2f, 0f), Quaternion.identity);
 		}
 	}
@@ -117,11 +116,8 @@ public class BranchManager : MonoBehaviour
 	}
 
 	public void ResetScene(){
+		Kitten.Meow("Resetting the Scene");
 		_isMarkedForReset = true;
-	}
-
-	public void SetTreeChoice(string chosenTreeKey) {
-		this.treeKey = chosenTreeKey;
 	}
 
 	/**

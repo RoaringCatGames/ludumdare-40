@@ -18,8 +18,9 @@ public class EndGameControlsController : MonoBehaviour {
 	//	controlsShowing flag from getting reset
 	void LateUpdate () {
 		if(BranchManager.instance.IsGameOver() && !areControlsShowing){
-			areControlsShowing = true;
-			animator.Play("end-game-controls-enter");
+			ShowControls();
+		} else if(!BranchManager.instance.IsGameOver() && areControlsShowing) {
+			HideControls();
 		}
 	}
 

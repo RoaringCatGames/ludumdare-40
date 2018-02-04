@@ -58,6 +58,6 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	public void PlaySfxByName(string sfxKey){
-		sfx.PlayOneShot(sfxMap[sfxKey.ToLower()], 1.0f); 
+		instance.sfx.PlayOneShot(instance.sfxMap[sfxKey.ToLower()], 1.0f); 
 	}
 }

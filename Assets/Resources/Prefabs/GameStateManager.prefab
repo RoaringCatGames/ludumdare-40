@@ -9,54 +9,47 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1140848434063300}
+  m_RootGameObject: {fileID: 1430816330772988}
   m_IsPrefabParent: 1
---- !u!1 &1140848434063300
+--- !u!1 &1430816330772988
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4907176623975360}
-  - component: {fileID: 114968263545936254}
+  - component: {fileID: 4483879407464632}
+  - component: {fileID: 114194034821137410}
   m_Layer: 0
-  m_Name: BranchManager
+  m_Name: GameStateManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4907176623975360
+--- !u!4 &4483879407464632
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1140848434063300}
+  m_GameObject: {fileID: 1430816330772988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.95, y: 19.15, z: 0}
+  m_LocalPosition: {x: -13.332319, y: 12.248477, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114968263545936254
+--- !u!114 &114194034821137410
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1140848434063300}
+  m_GameObject: {fileID: 1430816330772988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe5c0771b8db14f258f58e4554ea288f, type: 3}
+  m_Script: {fileID: 11500000, guid: bfd450c50cabc48dd8b5d273d9a5d7aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finalAnimation: {fileID: 1785008989008704, guid: 4496efe29bd9e48e3be4ad243fbaf6d6,
-    type: 2}
-  treePrefabs:
-  - Key: 0
-    Entry: {fileID: 1022841844484048, guid: 33252bcf9a53b409892628fa9fe63fd4, type: 2}
-  - Key: 1
-    Entry: {fileID: 1022841844484048, guid: c5d6bdae8d92948f198d2719d98e5538, type: 2}
-  treePrefab: {fileID: 1022841844484048, guid: 5746326ac165044d0a0432b0ae30df6c, type: 2}
-  isZenMode: 0
+  TreeTypeKey: 0
+  IsZenMode: 0

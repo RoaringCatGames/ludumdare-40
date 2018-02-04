@@ -257,7 +257,7 @@ public class BranchComponent : MonoBehaviour
 
   private void _spawnFoliage()
   {      
-    float baseFlowerDensity = BranchManager.instance.treeKey == "apricot" ? 3f : 6f;
+    float baseFlowerDensity = GameStateManager.instance.TreeTypeKey == TreeTypeKey.APRICOT ? 3f : 6f;
     LineSegment end = null, before = null;
     end = _lastSegment;
     if(end == null){
@@ -301,7 +301,7 @@ public class BranchComponent : MonoBehaviour
 
   private void _spawnFlowersOverSegment(LineSegment ls, float density, float baseDelay)
   {
-    string key = BranchManager.instance != null ? BranchManager.instance.treeKey : "sakura";
+    string key = GameStateManager.instance.TreeTypeKey == TreeTypeKey.SAKURA ? "sakura" : "apricot";
     _spawnPrefabOverSegment(animatedFlowerPrefab, this._flowerAnimationMap[key], ls, density, 1.75f, baseDelay);
   }
   private void _spawnLeavesOverSegment(LineSegment ls, float density, float baseDelay)
@@ -343,7 +343,6 @@ public class BranchComponent : MonoBehaviour
         DelayedAnimationComponent delay = leaf.AddComponent<DelayedAnimationComponent>();
         delay.delaySeconds = Random.Range(0f, 0.75f);// IGNORE BASE DELAY FOR NOW + baseDelay;
         delay.animationName = animationNames[Random.Range(0, animationNames.Length)];
-        Kitten.Meow("Animation Name: ", delay.animationName);
         added++;
       }
     }
