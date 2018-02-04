@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 95309362538301762}
   - component: {fileID: 58747539564868166}
   - component: {fileID: 114389369978062114}
+  - component: {fileID: 114322422948240930}
+  - component: {fileID: 114183464470964534}
   m_Layer: 0
   m_Name: SelectionPoint
   m_TagString: Untagged
@@ -75,6 +77,36 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114183464470964534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1691132182018894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926af79b2f6144706a0d947c4f45c791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114322422948240930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1691132182018894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f6d0ec6ad31475b90e8a5b93363565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorMap:
+  - Key: 0
+    color: {r: 0, g: 0.7647059, b: 0.57484794, a: 1}
+  - Key: 1
+    color: {r: 0.9063432, g: 0.9558824, b: 0.44279847, a: 1}
+  - Key: 2
+    color: {r: 0.35499567, g: 0.9852941, b: 0.85488737, a: 1}
+  defaultColor: {r: 0, g: 0.7647059, b: 0.57484794, a: 1}
 --- !u!114 &114389369978062114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -90,6 +122,7 @@ MonoBehaviour:
   directionArrowMaterial: {fileID: 2100000, guid: d4f494454ca874c408fb49959737158d,
     type: 2}
   secondsTillDeath: 8
+  urgentColorOverride: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &212882107631642360
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -10,13 +10,18 @@ public enum TreeTypeKey
     APRICOT
 }
 
+[RequireComponent(typeof(ColorOptionsComponent))]
 public class GameStateManager : MonoBehaviour {
 
   public static GameStateManager instance;
 
+  private ColorOptionsComponent colorOptions;
+
   void Awake() {
     if(instance == null) {
       instance = this;
+
+      colorOptions = GetComponent<ColorOptionsComponent>();
 
       DontDestroyOnLoad(gameObject);
     }else if(instance != this) {
@@ -29,10 +34,6 @@ public class GameStateManager : MonoBehaviour {
 
   public TreeTypeKeyedGameObject[] treeMap;
   public GameObject defaultTreePrefab;
-
-  public TreeTypeKeyedColor[] colorMap;
-  public Color defaultColor;
-
 
   public GameObject GetTreePrefab() {
     return GetTreePrefab(TreeTypeKey);
@@ -47,11 +48,10 @@ public class GameStateManager : MonoBehaviour {
   }
 
   public Color GetColor() {
-    return GetColor(TreeTypeKey);
+    return this.colorOptions.GetColor(TreeTypeKey);
   }
 
-  public Color GetColor(TreeTypeKey key) {
-    TreeTypeKeyedColor color = colorMap.FirstOrDefault((c) => c.Key == key);
-    return color != null ? color.color : defaultColor;
+  public Color GetColor(TreeTypeKey treeType) {
+    return this.colorOptions.GetColor(treeType);
   }
 }

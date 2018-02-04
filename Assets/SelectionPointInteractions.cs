@@ -8,6 +8,7 @@ public class SelectionPointInteractions : MonoBehaviour
 	public BranchComponent parentBranch;
 	public Material directionArrowMaterial;
 	public float secondsTillDeath = 5f;
+	public Color urgentColorOverride = Color.red;
 
   private bool isUserDragging = false;
 	private bool isUrgent = false;
@@ -29,6 +30,10 @@ public class SelectionPointInteractions : MonoBehaviour
 		elapsedTime += TimeUtils.ThrottledDelta(1f/30f);
 
 		if(!isUrgent && elapsedTime >= ((2f/3f)*secondsTillDeath)){
+			SpriteRenderer r = GetComponent<SpriteRenderer>();
+			if(r != null) {
+				r.color = urgentColorOverride;
+			}
 			animator.Play("selection-urgent-pulse");
 		}
 

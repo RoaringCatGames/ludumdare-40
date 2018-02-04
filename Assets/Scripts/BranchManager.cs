@@ -32,7 +32,7 @@ public class BranchManager : MonoBehaviour
 			
 			_uiRoot = GameObject.Find("GameUI");
 			_uiSocial = GameObject.Find("TwitterShareUI");		
-			DontDestroyOnLoad(instance.gameObject);
+			// DontDestroyOnLoad(instance.gameObject);
     }
     else if (this != instance)
     {
@@ -42,7 +42,6 @@ public class BranchManager : MonoBehaviour
 
 	void Update(){
 		if(_isMarkedForReset){
-			Kitten.Meow("Game is Resetting");
 			_isMarkedForReset = false;
 			// Delete All Branches
 			_branches.ForEach((branch) => {		
@@ -54,7 +53,6 @@ public class BranchManager : MonoBehaviour
 			_branches = new List<BranchComponent>();
 			Destroy(_currentTree);
 
-			Kitten.Meow("Branches Destroyed. Current Branches: ", _branches.Count());
 			// Start a new Root Tree
 			GameObject prefab = GameStateManager.instance.GetTreePrefab();			
 			_currentTree = Instantiate(prefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
@@ -116,7 +114,6 @@ public class BranchManager : MonoBehaviour
 	}
 
 	public void ResetScene(){
-		Kitten.Meow("Resetting the Scene");
 		_isMarkedForReset = true;
 	}
 
