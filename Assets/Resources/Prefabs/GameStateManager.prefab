@@ -51,5 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd450c50cabc48dd8b5d273d9a5d7aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TreeTypeKey: 0
+  TreeTypeKey: 1
   IsZenMode: 0
+  treeMap:
+  - Key: 0
+    Entry: {fileID: 1022841844484048, guid: 33252bcf9a53b409892628fa9fe63fd4, type: 2}
+  - Key: 1
+    Entry: {fileID: 1022841844484048, guid: c5d6bdae8d92948f198d2719d98e5538, type: 2}
+  defaultTreePrefab: {fileID: 1022841844484048, guid: 33252bcf9a53b409892628fa9fe63fd4,
+    type: 2}

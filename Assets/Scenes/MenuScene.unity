@@ -225,6 +225,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114194034821137410, guid: ab11d88cf2c24479c919981faa323c6c,
+        type: 2}
+      propertyPath: treeMap.Array.data[0].Key
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114194034821137410, guid: ab11d88cf2c24479c919981faa323c6c,
+        type: 2}
+      propertyPath: treeMap.Array.data[1].Key
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114194034821137410, guid: ab11d88cf2c24479c919981faa323c6c,
+        type: 2}
+      propertyPath: TreeTypeKey
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab11d88cf2c24479c919981faa323c6c, type: 2}
   m_IsPrefabParent: 0
@@ -720,6 +735,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstPosition: {x: 0, y: 0}
   branchLevel: 0
+  treeTypeKeyOverride: 1
   isAutomated: 1
   secondsBetweenSegments: 0.25
   maxHeight: 16
@@ -737,7 +753,6 @@ MonoBehaviour:
     type: 2}
   isGrowing: 1
   parentBranch: {fileID: 0}
-  treeKey: sakura
 --- !u!1 &958860628
 GameObject:
   m_ObjectHideFlags: 0

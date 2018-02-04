@@ -228,5 +228,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ae42183d8da434d50afbb1598493e492, type: 3}
   - {fileID: 8300000, guid: e1d7ef614008a4cfc81a3bb14a9f8237, type: 3}
   - {fileID: 8300000, guid: b1cb653e56cab4084b8bae156eb8c67d, type: 3}
+  soundEffects:
+  - key: camera-single
+    clip: {fileID: 8300000, guid: 218283a208294be488c09f034408b2e6, type: 3}
+  - key: camera-double
+    clip: {fileID: 8300000, guid: dc572a22db9959043a63e9951f2b1298, type: 3}
   music: {fileID: 82491422093626122}
   sfx: {fileID: 82296176325423912}

@@ -10,9 +10,7 @@ public class BranchManager : MonoBehaviour
 
   public static BranchManager instance;
 	public GameObject finalAnimation;
-
-	public TreeTypeKeyedGameObject[] treePrefabs;
-	public GameObject treePrefab;
+	
 	public bool isZenMode = false;
 
 
@@ -58,8 +56,8 @@ public class BranchManager : MonoBehaviour
 
 			Kitten.Meow("Branches Destroyed. Current Branches: ", _branches.Count());
 			// Start a new Root Tree
-			TreeTypeKeyedGameObject keyedPrefab = treePrefabs.FirstOrDefault((t) => t.Key == GameStateManager.instance.TreeTypeKey);
-			_currentTree = Instantiate(keyedPrefab.Entry, new Vector3(0f, -2f, 0f), Quaternion.identity);
+			GameObject prefab = GameStateManager.instance.GetTreePrefab();			
+			_currentTree = Instantiate(prefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
 
 			//Set our flag to play again
 			_hasGameEnded = false;
@@ -100,12 +98,14 @@ public class BranchManager : MonoBehaviour
   }
 
 	public void PlantTree() {
-		if(treePrefabs != null && treePrefabs.Length > 0){
-
-			TreeTypeKeyedGameObject keyedPrefab = treePrefabs.FirstOrDefault((t) => t.Key == GameStateManager.instance.TreeTypeKey);
-			_currentTree = Instantiate(keyedPrefab.Entry, new Vector3(0f, -2f, 0f), Quaternion.identity);
-		}
+		PlantTree(GameStateManager.instance.TreeTypeKey);
 	}
+
+	public void PlantTree(TreeTypeKey key) {
+			GameObject prefab = GameStateManager.instance.GetTreePrefab(key);//treePrefabs.FirstOrDefault((t) => t.Key == key);
+			_currentTree = Instantiate(prefab, new Vector3(0f, -2f, 0f), Quaternion.identity);		
+	}
+
   public void AddBranch(BranchComponent branch)
   {
     _branches.Add(branch);

@@ -15,6 +15,7 @@ public class BranchComponent : MonoBehaviour
   [Header("Initial Segment")]
   public Vector2 firstPosition = new Vector2(0f, 1.5f);
   public int branchLevel = 0;
+  public TreeTypeKey treeTypeKeyOverride = TreeTypeKey.DEFAULT;
 
   [Header("Growth Properties")]
   public bool isAutomated = false;
@@ -41,9 +42,17 @@ public class BranchComponent : MonoBehaviour
   public bool isGrowing = true;
   [HideInInspector]
   public BranchComponent parentBranch;
-  [HideInInspector]
-  public string treeKey = "sakura";
+  
 
+  private TreeTypeKey CurrentTreeTypeKey { 
+    get {
+      if(this.treeTypeKeyOverride != TreeTypeKey.DEFAULT){
+        return this.treeTypeKeyOverride;
+      }else {
+        return GameStateManager.instance.TreeTypeKey;
+      }
+    }
+  }
   private LineRenderer _lineRenderer;
   private float _elapsedTime = 0f;
   private Vector3 _nextTargetPosition;
@@ -57,9 +66,9 @@ public class BranchComponent : MonoBehaviour
     "leaf-5"
   };
 
-  private Dictionary<string, string[]> _flowerAnimationMap = new Dictionary<string, string[]>() {
-    { "sakura", new string[] { "Bloom 1", "Bloom 2", "Bloom 3" } },
-    { "apricot", new string[] { 
+  private Dictionary<TreeTypeKey, string[]> _flowerAnimationMap = new Dictionary<TreeTypeKey, string[]>() {
+    { TreeTypeKey.SAKURA, new string[] { "Bloom 1", "Bloom 2", "Bloom 3" } },
+    { TreeTypeKey.APRICOT, new string[] { 
       "MaiStem1", "MaiStem1 0", "MaiStem1 1", "MaiStem1a", "MaiStem1a 0", "MaiStem1a 1", 
       "MaiStem1b", "MaiStem1b 0", "MaiStem1b 1", "MaiStem2", "MaiStem2a", "MaiStem3", 
       "MaiBloom1", "MaiBloom2", "MaiBloom3", "MaiBloom4" } }
@@ -253,11 +262,12 @@ public class BranchComponent : MonoBehaviour
     newBranch.parentBranch = this;
     newBranch.animatedFlowerPrefab = animatedFlowerPrefab;
     newBranch.animatedLeafPrefab = animatedLeafPrefab;
+    newBranch.treeTypeKeyOverride = this.treeTypeKeyOverride;
   }
 
   private void _spawnFoliage()
   {      
-    float baseFlowerDensity = GameStateManager.instance.TreeTypeKey == TreeTypeKey.APRICOT ? 9f : 6f;
+    float baseFlowerDensity = CurrentTreeTypeKey == TreeTypeKey.APRICOT ? 9f : 6f;
     LineSegment end = null, before = null;
     end = _lastSegment;
     if(end == null){
@@ -301,7 +311,7 @@ public class BranchComponent : MonoBehaviour
 
   private void _spawnFlowersOverSegment(LineSegment ls, float density, float baseDelay)
   {
-    string key = GameStateManager.instance.TreeTypeKey == TreeTypeKey.SAKURA ? "sakura" : "apricot";
+    TreeTypeKey key =  CurrentTreeTypeKey;
     _spawnPrefabOverSegment(animatedFlowerPrefab, this._flowerAnimationMap[key], ls, density, 1.75f, baseDelay);
   }
   private void _spawnLeavesOverSegment(LineSegment ls, float density, float baseDelay)
