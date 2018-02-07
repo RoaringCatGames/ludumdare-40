@@ -536,7 +536,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 75, y: -25}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 160, y: 100}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &716898136
 MonoBehaviour:
@@ -562,7 +562,7 @@ MonoBehaviour:
     m_PressedColor: {r: 0.81236243, g: 0.37959558, b: 0.875, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.5
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -1220,8 +1220,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -75.000084, y: -108.3}
-  m_SizeDelta: {x: 10000, y: 125}
+  m_AnchoredPosition: {x: -75.00009, y: -106.739334}
+  m_SizeDelta: {x: 164, y: 128.12}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1664797963
 MonoBehaviour:
@@ -1270,7 +1270,7 @@ MonoBehaviour:
     m_PressedColor: {r: 1, g: 0.7352941, b: 0.7352941, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.5
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -1377,8 +1377,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -75, y: 35.5}
-  m_SizeDelta: {x: 200, y: 121.93}
+  m_AnchoredPosition: {x: -75.00003, y: 34.51}
+  m_SizeDelta: {x: 182.27, y: 123.91}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1783851759
 MonoBehaviour:
@@ -1427,7 +1427,7 @@ MonoBehaviour:
     m_PressedColor: {r: 0.9852941, g: 0.876472, b: 0.26805797, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.5
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
