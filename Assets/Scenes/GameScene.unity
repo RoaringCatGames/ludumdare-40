@@ -1261,6 +1261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideUIOnScreenCapture: 1
+  shouldSaveToFile: 0
   relativeFileSavePath: 
   savedFileNameFormatted: 
   onScreenCaptureComplete:
@@ -2183,6 +2184,7 @@ GameObject:
   - component: {fileID: 1611732432}
   - component: {fileID: 1611732428}
   - component: {fileID: 1611732433}
+  - component: {fileID: 1611732434}
   m_Layer: 5
   m_Name: ScreenCapButton
   m_TagString: Untagged
@@ -2221,6 +2223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideUIOnScreenCapture: 1
+  shouldSaveToFile: 1
   relativeFileSavePath: /
   savedFileNameFormatted: calligratree-{0}.png
   onScreenCaptureComplete:
@@ -2363,6 +2366,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c544de8f409547e1b785167aa8549d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1611732434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1611732426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a0ba5655fc945809d255ee47d86407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideFileSaveOnMobile: 1
 --- !u!1 &1629195465
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ public class CalligraTreeScreenshotHandlerComponent: MonoBehaviour {
     #if UNITY_IOS || UNITY_ANDROID
     // Save to Gallery!
     NativeGallery.SaveToGallery(screenshot, "CalligraTrees", "calligratree-{0}.png");
+    
     #endif
     Kitten.Meow("SAVE TO GALLERY FIRED!");
   }

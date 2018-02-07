@@ -37,7 +37,7 @@ namespace LitterBox.ScreenCapture {
     /// <param name="relativeFilePath">Provide a file path relative to the application to save to</param>
     /// <param name="fileSaveNameFormat">A file name with a single placeholder for a timestamp. Example: mygame-screenshot-{0}.png</param>
     /// <returns>This method returns an IEnumerator and is meant to be run in a Coroutine and provided a callback to handle the result.</returns>
-    public static IEnumerator CaptureScreenShotAsTexture(ScreenCaptureResultHandler callback, bool hideUI = true, string relativeFilePath = null, string fileSaveNameFormat = null) {
+    public static IEnumerator CaptureScreenShotAsTexture(ScreenCaptureResultHandler callback, bool hideUI = true, bool saveToFile = false, string relativeFilePath = null, string fileSaveNameFormat = null) {
 
       // Wait till the last possible moment before screen rendering to hide the UI
       yield return null;
@@ -57,7 +57,7 @@ namespace LitterBox.ScreenCapture {
       ss.Apply();
 
       string screenshotPath = null;
-      if (!string.IsNullOrEmpty(relativeFilePath) && !string.IsNullOrEmpty(fileSaveNameFormat)) {
+      if (saveToFile && (!string.IsNullOrEmpty(relativeFilePath) && !string.IsNullOrEmpty(fileSaveNameFormat))) {
         DateTime now = DateTime.Now;
         string suffix = String.Concat(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Millisecond);
         screenshotPath = string.Concat(Application.persistentDataPath, "/", relativeFilePath, "/", string.Format(fileSaveNameFormat, suffix));    
