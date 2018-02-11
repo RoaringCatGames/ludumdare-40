@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using LitterBox.Utils;
 
 public class EndGameControlsController : MonoBehaviour {
+
+	public Animator targetAnimator;
+	public string targetAnimationName;
 
 	private Animator animator;
 
@@ -27,19 +31,31 @@ public class EndGameControlsController : MonoBehaviour {
 	public void HideControls(){
 		animator.Play("end-game-controls-leave");
 		areControlsShowing = false;
+		_toggleAdditionalAnimation(areControlsShowing);
 	}
 
 	public void ShowControls() {
 		animator.Play("end-game-controls-enter");
 		areControlsShowing = true;
+		_toggleAdditionalAnimation(areControlsShowing);
 	}
 
 	public void ToggleControls(bool shouldShow){
 		if(shouldShow) {
-			this.ShowControls();
+			this.ShowControls();			
 		}else{
 			this.HideControls();
 		}
+		_toggleAdditionalAnimation(shouldShow);
+	}
 
+	private void _toggleAdditionalAnimation(bool shouldShow) {
+		if(this.targetAnimator != null && !String.IsNullOrEmpty(this.targetAnimationName)) {
+			if(shouldShow) {
+				this.targetAnimator.Play(this.targetAnimationName);
+			}else{
+				this.targetAnimator.Play("default");
+			}
+		}
 	}
 }
