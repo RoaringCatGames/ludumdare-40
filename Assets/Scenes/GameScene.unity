@@ -1519,6 +1519,7 @@ GameObject:
   - component: {fileID: 935565623}
   - component: {fileID: 935565622}
   - component: {fileID: 935565621}
+  - component: {fileID: 935565625}
   m_Layer: 0
   m_Name: PostGameStamp
   m_TagString: Untagged
@@ -1620,6 +1621,22 @@ RectTransform:
   m_AnchoredPosition: {x: -20.25, y: 13.78}
   m_SizeDelta: {x: 5, y: 12.44}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &935565625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 935565620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cdfc721c6f904c23916d0e3218fa01c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTime: {x: 2018, y: 2, z: 13}
+  endTime: {x: 2018, y: 2, z: 28}
+  spriteDuringTimeSpan: {fileID: 21300000, guid: d7ac747d26006ea44b6dc98a1b13893d,
+    type: 3}
+  defaultSprite: {fileID: 21300000, guid: 9f07d2e0756c4464086befcae63c82af, type: 3}
 --- !u!1 &1012995079
 GameObject:
   m_ObjectHideFlags: 0
