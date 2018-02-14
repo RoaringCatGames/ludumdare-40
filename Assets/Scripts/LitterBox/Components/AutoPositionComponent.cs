@@ -46,6 +46,10 @@ namespace LitterBox.Components {
             newX = left + (rectTransform.rect.width/2f) + offsetX;
             newY = bottom + (rectTransform.rect.height/2f) + offsetY;
             break;
+          case AutoPositionTarget.BOTTOM_RIGHT:
+            newX = right - (rectTransform.rect.width/2f) + offsetX;
+            newY = bottom + (rectTransform.rect.height/2f) + offsetY;
+            break;
           default:
             newX = left + (rectTransform.rect.width/2f) + offsetX;
             newY = bottom + (rectTransform.rect.height/2f) + offsetY;
