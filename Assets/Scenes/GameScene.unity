@@ -1636,7 +1636,7 @@ MonoBehaviour:
   endTime: {x: 2018, y: 2, z: 28}
   spriteDuringTimeSpan: {fileID: 21300000, guid: d7ac747d26006ea44b6dc98a1b13893d,
     type: 3}
-  defaultSprite: {fileID: 21300000, guid: 9f07d2e0756c4464086befcae63c82af, type: 3}
+  defaultSprite: {fileID: 21300000, guid: f17c0c13cd13296428ac1d7f089d6ba9, type: 3}
 --- !u!1 &1012995079
 GameObject:
   m_ObjectHideFlags: 0
