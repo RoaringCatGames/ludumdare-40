@@ -63,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 1022841844484048}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_Children:
   - {fileID: 4061085720982260}
   m_Father: {fileID: 0}
@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstPosition: {x: 0, y: 1.5}
   branchLevel: 0
+  treeTypeKeyOverride: 0
   isAutomated: 0
   secondsBetweenSegments: 0.5
   maxHeight: 19.5
@@ -99,4 +100,3 @@ MonoBehaviour:
     type: 2}
   isGrowing: 1
   parentBranch: {fileID: 0}
-  treeKey: sakura

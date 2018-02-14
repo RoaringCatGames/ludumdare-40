@@ -163,7 +163,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -100
-  m_Sprite: {fileID: 21300000, guid: 5757eb1f2083a204fb7de82402c3c533, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e15947a8a76f4f542a8650640629d569, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -180,8 +180,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 13910141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -5, z: 2}
-  m_LocalScale: {x: 2.3299906, y: 2.3299906, z: 0}
+  m_LocalPosition: {x: 0, y: 12.5, z: 1}
+  m_LocalScale: {x: 1.9, y: 1.9, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -307,6 +307,7 @@ MonoBehaviour:
   target: 6
   offsetX: 0.1
   offsetY: -1
+  positionAfterInitOnly: 0
 --- !u!114 &341370253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,8 +559,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.8619026, g: 0.6672794, b: 0.8897059, a: 1}
-    m_PressedColor: {r: 0.81236243, g: 0.37959558, b: 0.875, a: 1}
+    m_HighlightedColor: {r: 0.019139292, g: 0.7562269, b: 0.86764705, a: 1}
+    m_PressedColor: {r: 0.07190742, g: 0.6080173, b: 0.6985294, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.5
@@ -1181,7 +1182,7 @@ MonoBehaviour:
   - Key: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - Key: 1
-    color: {r: 0.12941177, g: 0.7254902, b: 0.7372549, a: 1}
+    color: {r: 0.19463666, g: 0.86904234, b: 0.88235295, a: 1}
   - Key: 2
     color: {r: 0.9686275, g: 0.74509805, b: 0.6784314, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}

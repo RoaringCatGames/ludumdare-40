@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstPosition: {x: 0, y: 1.5}
   branchLevel: 0
+  treeTypeKeyOverride: 0
   isAutomated: 0
   secondsBetweenSegments: 0.5
   maxHeight: 19.5
@@ -99,4 +100,3 @@ MonoBehaviour:
     type: 2}
   isGrowing: 1
   parentBranch: {fileID: 0}
-  treeKey: sakura
