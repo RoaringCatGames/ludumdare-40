@@ -415,6 +415,7 @@ GameObject:
   - component: {fileID: 377350077}
   - component: {fileID: 377350079}
   - component: {fileID: 377350078}
+  - component: {fileID: 377350080}
   m_Layer: 5
   m_Name: ZenModeToggle
   m_TagString: Untagged
@@ -509,6 +510,17 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 0
+--- !u!114 &377350080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 377350076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b76d94f6d544e1aaf5cacdc37d5ab5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &715703524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,6 +1352,23 @@ GameObject:
   m_PrefabParentObject: {fileID: 1430816330772988, guid: ab11d88cf2c24479c919981faa323c6c,
     type: 2}
   m_PrefabInternal: {fileID: 81648178}
+--- !u!114 &1477477454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1477477453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238fd135701e044749fa8ceda223e6c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteMap:
+  - Key: 1
+    sprite: {fileID: 21300000, guid: 9abda746ff86ed64ab8896eb54755b80, type: 3}
+  - Key: 2
+    sprite: {fileID: 21300000, guid: 345227367ad46244595bf61c11f2c341, type: 3}
+  defaultSprite: {fileID: 21300000, guid: e15947a8a76f4f542a8650640629d569, type: 3}
 --- !u!114 &1477477456
 MonoBehaviour:
   m_ObjectHideFlags: 0
