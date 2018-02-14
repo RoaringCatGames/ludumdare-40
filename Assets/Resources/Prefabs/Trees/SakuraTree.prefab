@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstPosition: {x: 0, y: 1.5}
   branchLevel: 0
+  treeTypeKeyOverride: 0
   isAutomated: 0
   secondsBetweenSegments: 0.5
   maxHeight: 19.5
@@ -93,10 +94,9 @@ MonoBehaviour:
   branchMaterial: {fileID: 2100000, guid: 6e98159b66934497f998eb720cefdb47, type: 2}
   animatedLeafPrefab: {fileID: 1052806883646664, guid: 6988c745a7a416a46a8196afa8eb399b,
     type: 2}
-  animatedFlowerPrefab: {fileID: 1449924602640506, guid: 73ee9f96a36664cb0871b862fb426b86,
+  animatedFlowerPrefab: {fileID: 1965096145551750, guid: 861cadb321e394590b9e18efad6ebbdf,
     type: 2}
   selectionPointPrefab: {fileID: 1691132182018894, guid: 0d49b90dd558d40f18baff5783633387,
     type: 2}
   isGrowing: 1
   parentBranch: {fileID: 0}
-  treeKey: sakura
