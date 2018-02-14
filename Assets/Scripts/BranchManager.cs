@@ -11,9 +11,8 @@ public class BranchManager : MonoBehaviour
   public static BranchManager instance;
 	public GameObject finalAnimation;
 	
-	public bool isZenMode = false;
 
-
+	private bool _isZenMode = false;
 	private bool _isMarkedForReset = false;
   private List<BranchComponent> _branches = new List<BranchComponent>();
 	private bool _hasGameEnded = false;
@@ -32,6 +31,7 @@ public class BranchManager : MonoBehaviour
 			
 			_uiRoot = GameObject.Find("GameUI");
 			_uiSocial = GameObject.Find("TwitterShareUI");		
+			_isZenMode = GameStateManager.instance.IsZenMode;
 			// DontDestroyOnLoad(instance.gameObject);
     }
     else if (this != instance)
@@ -54,8 +54,11 @@ public class BranchManager : MonoBehaviour
 			Destroy(_currentTree);
 
 			// Start a new Root Tree
-			GameObject prefab = GameStateManager.instance.GetTreePrefab();			
-			_currentTree = Instantiate(prefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
+			PlantTree();
+			// GameObject prefab = GameStateManager.instance.GetTreePrefab();			
+			// _currentTree = Instantiate(prefab, new Vector3(0f, -2f, 0f), Quaternion.identity);
+			// BranchComponent trunk = _currentTree.GetComponent<BranchComponent>();
+			// trunk.SetZenMode(_isZenMode);
 
 			//Set our flag to play again
 			_hasGameEnded = false;
@@ -66,7 +69,7 @@ public class BranchManager : MonoBehaviour
   void LateUpdate()
   {
 		if(!_hasGameEnded){
-			if(!isZenMode){
+			if(!_isZenMode){
 				bool collisionFound = _checkForCollisions();
 
 				if(collisionFound){
@@ -101,7 +104,9 @@ public class BranchManager : MonoBehaviour
 
 	public void PlantTree(TreeTypeKey key) {
 			GameObject prefab = GameStateManager.instance.GetTreePrefab(key);//treePrefabs.FirstOrDefault((t) => t.Key == key);
-			_currentTree = Instantiate(prefab, new Vector3(0f, -2f, 0f), Quaternion.identity);		
+			_currentTree = Instantiate(prefab, new Vector3(0f, -2f, 0f), Quaternion.identity);	
+			BranchComponent trunk = _currentTree.GetComponentInChildren<BranchComponent>();
+			trunk.SetZenMode(_isZenMode);	
 	}
 
   public void AddBranch(BranchComponent branch)

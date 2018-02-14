@@ -15,6 +15,10 @@ public class GlobalActionsComponent : MonoBehaviour {
     GameStateManager.instance.TreeTypeKey = this._extractTreeTypeKey(treeType);
   }
 
+  public void SetZenMode(bool isZenMode) {
+    GameStateManager.instance.IsZenMode = isZenMode;
+  }
+
   private TreeTypeKey _extractTreeTypeKey(string keyName) {
     switch(keyName){
       case "sakura":

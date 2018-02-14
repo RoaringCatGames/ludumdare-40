@@ -58,6 +58,7 @@ public class BranchComponent : MonoBehaviour
   private Vector3 _nextTargetPosition;
   private int _childBranchCount = 0;
   private bool _hasSpawnedFoliage = false;
+  private bool _isZenMode = false;
   private string[] _leafAniNames = new string[]{
     "leaf-1",
     "leaf-2",
@@ -188,7 +189,10 @@ public class BranchComponent : MonoBehaviour
           GameObject selectionPoint = Instantiate(selectionPointPrefab, _lastSegment.StartPoint, Quaternion.identity);
           selectionPoint.transform.parent = transform;
           selectionPoint.transform.localPosition = _lastSegment.StartPoint;
-          selectionPoint.GetComponent<SelectionPointInteractions>().parentBranch = this;
+          SelectionPointInteractions spi = selectionPoint.GetComponent<SelectionPointInteractions>();
+          spi.parentBranch = this;
+          spi.shouldBecomeUrgent = !_isZenMode;
+          
         }
         _childBranchCount += 1;
       }
@@ -214,6 +218,10 @@ public class BranchComponent : MonoBehaviour
     branchRotation -= 90f;
 
     _addBranchLocal(localPoint, branchRotation);
+  }
+
+  public void SetZenMode(bool isZenMode) {
+    this._isZenMode = isZenMode;
   }
 
   private void _addLineSegment(Vector3 start, Vector3 end){
@@ -263,6 +271,7 @@ public class BranchComponent : MonoBehaviour
     newBranch.animatedFlowerPrefab = animatedFlowerPrefab;
     newBranch.animatedLeafPrefab = animatedLeafPrefab;
     newBranch.treeTypeKeyOverride = this.treeTypeKeyOverride;
+    newBranch.SetZenMode(_isZenMode);
   }
 
   private void _spawnFoliage()

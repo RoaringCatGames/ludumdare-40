@@ -7,6 +7,8 @@ public class SelectionPointInteractions : MonoBehaviour
 {
 	public BranchComponent parentBranch;
 	public Material directionArrowMaterial;
+
+	public bool shouldBecomeUrgent = true;
 	public float secondsTillDeath = 5f;
 	public Color urgentColorOverride = Color.red;
 
@@ -29,7 +31,7 @@ public class SelectionPointInteractions : MonoBehaviour
 		//Maximum time of 30fps
 		elapsedTime += TimeUtils.ThrottledDelta(1f/30f);
 
-		if(!isUrgent && elapsedTime >= ((2f/3f)*secondsTillDeath)){
+		if(shouldBecomeUrgent && !isUrgent && elapsedTime >= ((2f/3f)*secondsTillDeath)){
 			SpriteRenderer r = GetComponent<SpriteRenderer>();
 			if(r != null) {
 				r.color = urgentColorOverride;
@@ -73,7 +75,7 @@ public class SelectionPointInteractions : MonoBehaviour
 					directionRenderer.positionCount = 2;
 				}
 			}
-    } else if(elapsedTime >= secondsTillDeath) {
+    } else if(shouldBecomeUrgent && elapsedTime >= secondsTillDeath) {
 			Destroy(gameObject);
 		}
 
