@@ -941,6 +941,7 @@ GameObject:
   - component: {fileID: 495921457}
   - component: {fileID: 495921456}
   - component: {fileID: 495921458}
+  - component: {fileID: 495921459}
   m_Layer: 0
   m_Name: background
   m_TagString: Untagged
@@ -1013,9 +1014,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 495921455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 926af79b2f6144706a0d947c4f45c791, type: 3}
+  m_Script: {fileID: 11500000, guid: 87cb1d4e84ac6490393738313640c534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &495921459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 495921455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238fd135701e044749fa8ceda223e6c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteMap:
+  - Key: 1
+    sprite: {fileID: 21300000, guid: 9abda746ff86ed64ab8896eb54755b80, type: 3}
+  - Key: 2
+    sprite: {fileID: 21300000, guid: 345227367ad46244595bf61c11f2c341, type: 3}
+  defaultSprite: {fileID: 21300000, guid: e15947a8a76f4f542a8650640629d569, type: 3}
 --- !u!1 &694818483
 GameObject:
   m_ObjectHideFlags: 0

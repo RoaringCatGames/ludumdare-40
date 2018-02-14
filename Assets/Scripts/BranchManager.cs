@@ -69,7 +69,7 @@ public class BranchManager : MonoBehaviour
   void LateUpdate()
   {
 		if(!_hasGameEnded){
-			if(!_isZenMode){
+			// if(!_isZenMode){
 				bool collisionFound = _checkForCollisions();
 
 				if(collisionFound){
@@ -87,7 +87,7 @@ public class BranchManager : MonoBehaviour
 						}
 					}
 				}
-			}
+			// }
 
 			if(!_hasGameEnded){
 				bool isStillGrowing = _isTreeStillGrowing();
