@@ -103,7 +103,7 @@ MonoBehaviour:
   - Key: 0
     color: {r: 0, g: 0.7647059, b: 0.57484794, a: 1}
   - Key: 1
-    color: {r: 1, g: 0.78203773, b: 0.7794118, a: 1}
+    color: {r: 0.9490197, g: 0.54901963, b: 0.5254902, a: 1}
   - Key: 2
     color: {r: 0.9921569, g: 0.98823535, b: 0.18039216, a: 1}
   defaultColor: {r: 0, g: 0.7647059, b: 0.57484794, a: 1}
@@ -121,6 +121,7 @@ MonoBehaviour:
   parentBranch: {fileID: 0}
   directionArrowMaterial: {fileID: 2100000, guid: d4f494454ca874c408fb49959737158d,
     type: 2}
+  shouldBecomeUrgent: 1
   secondsTillDeath: 8
   urgentColorOverride: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &212882107631642360
