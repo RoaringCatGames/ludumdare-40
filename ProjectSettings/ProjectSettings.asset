@@ -130,7 +130,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0
+  bundleVersion: 1.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -165,8 +165,9 @@ PlayerSettings:
     Android: com.roaringcatgames.calligratree
     Standalone: com.roaringcatgames.calligratree
     iOS: com.roaringcatgames.calligratree
-  buildNumber: {}
-  AndroidBundleVersionCode: 9
+  buildNumber:
+    iOS: 1
+  AndroidBundleVersionCode: 10
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 25
   AndroidPreferredInstallLocation: 1
