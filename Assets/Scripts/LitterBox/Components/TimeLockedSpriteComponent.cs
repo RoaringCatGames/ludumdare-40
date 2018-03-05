@@ -24,7 +24,8 @@ namespace LitterBox.Components {
       if(beginning <= now && now <= end) {
         r.sprite = spriteDuringTimeSpan;
       }else{
-        r.sprite = defaultSprite;
+        gameObject.SetActive(false);
+        // r.sprite = defaultSprite;
       }
     }
   }
